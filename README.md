@@ -17,6 +17,10 @@ Brief description of main modules:
 5. Fast_Scene_Tree: scene object manager
 6. Fast_SIMD      : some SIMD powered routines
 7. Fast_Threads   : working with threads(in particular, implementations of multi-threaded variants of some functions from other modules)
+8. Hot_Keys       : key mapping
+9. Image_Editor   : editing sprites(filters, masks, etc.)
+10. Documentation : descriptions of tools from Draw, AnimK, File
+11. 
 
 Screenshots:
    1. Game mode: multithreading, SIMD, 100000 sprites
