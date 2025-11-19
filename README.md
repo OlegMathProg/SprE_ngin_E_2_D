@@ -10,9 +10,10 @@ In the future, a powerful editor for sprites, splines and other game objects wil
 Executable demo(SprE_ngin_E_2_D.exe) is included, so run-n-fun 😉. 
 
 Brief description of main modules:
-1. Fast_AnimK: contains some routines for animation(particles,physics,hair,fluid effects etc.)
-2. Fast_GL   : contains some routines for initializing GLSL shaders
-3. 
+1. Fast_AnimK   : animation(particles,physics,hair,fluid effects etc.)
+2. Fast_GL      : initializing GLSL shaders
+3. Fast_Graphics: rendering of primitives(like a line, rectangle,circle), filters, blitters, CSR-sprites processing etc.
+4. 
 
 Screenshots:
    1. Game mode: multithreading, SIMD, 100000 sprites
