@@ -8,7 +8,9 @@ Killer features:
 
 Supported OS: currently only Windows
 
-Brief description of main modules:
+Brief description
+
+Main modules:
 01. Fast_AnimK      : animation(particles,physics,hair,fluid effects etc.)
 02. Fast_GL         : initializing GLSL shaders
 03. Fast_Graphics   : rendering of primitives(like a line, rectangle,circle), filters, blitters, CSR-sprites processing etc.
