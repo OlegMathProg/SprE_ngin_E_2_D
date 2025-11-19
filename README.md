@@ -13,7 +13,8 @@ Brief description of main modules:
 1. Fast_AnimK   : animation(particles,physics,hair,fluid effects etc.)
 2. Fast_GL      : initializing GLSL shaders
 3. Fast_Graphics: rendering of primitives(like a line, rectangle,circle), filters, blitters, CSR-sprites processing etc.
-4. 
+4. Fast_UI      : working with UI/UX elements
+5. 
 
 Screenshots:
    1. Game mode: multithreading, SIMD, 100000 sprites
