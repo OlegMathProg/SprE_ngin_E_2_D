@@ -15,7 +15,8 @@ Brief description of main modules:
 3. Fast_Graphics  : rendering of primitives(like a line, rectangle,circle), filters, blitters, CSR-sprites processing etc.
 4. Fast_UI        : working with UI/UX elements
 5. Fast_Scene_Tree: scene object manager
-6. 
+6. Fast_SIMD      : some SIMD powered routines
+7. 
 
 Screenshots:
    1. Game mode: multithreading, SIMD, 100000 sprites
