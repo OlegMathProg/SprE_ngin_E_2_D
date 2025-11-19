@@ -11,10 +11,14 @@ Executable file is included, so run-n-fun 😉.
 
 
 Screenshots:
-   1. Game Mode(Multithreading, SIMD, 100000 Sprites)
+   1. Game mode: multithreading, SIMD, 100000 sprites)
 <img width="1562" height="897" alt="Editor_Preview1" src="https://github.com/user-attachments/assets/d4cdf93e-4d7e-4095-aa16-1e7f102ac1d9" />
 
-   2. Editor Mode(Multithreading, SIMD, Spline with 20000000 points)
+   2. Editor mode: spline with 20000000 points)
 <img width="1562" height="897" alt="Editor_Preview2" src="https://github.com/user-attachments/assets/46b76d05-e08e-4719-84a4-a9fa3d3e67fd" />
 
+   3. Editor mode: selected points in spline with 20000000 points
+<img width="1562" height="897" alt="Editor_Preview3" src="https://github.com/user-attachments/assets/3dd94c26-e9dc-466d-a77a-78131d64a93c" />
 
+   4. Editor mode: selected points in splines with 60000000 points
+<img width="1562" height="897" alt="Editor_Preview4" src="https://github.com/user-attachments/assets/b45ded14-7d49-4cf0-bd02-c7578b519ab8" />
