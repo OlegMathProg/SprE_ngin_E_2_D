@@ -9,6 +9,7 @@ Killer features:
 # Brief description
 
 Supported OS: currently only Windows
+
 Rendering type: software (OpenGL is used only for outputting the final frame, but shader support is already implemented).
 
 Main modules:
