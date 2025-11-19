@@ -6,8 +6,7 @@ Killer features:
 - thanks to the "dirty rectangles" technology, scrolling of background objects occurs almost very quickly, which allows for the rendering of very large sprites (more than 30kx30k pixels) as background objects;
 - using multi-threaded processing in conjunction with SIMD optimizations, it is possible to achieve quite decent speed even in software rendering mode.
 
-In the future, a powerful editor for sprites, splines and other game objects will be available.
-Executable demo(SprE_ngin_E_2_D.exe) is included, so run-n-fun 😉. 
+In the future, a powerful editor for sprites, splines and other game objects will be available. 
 
 Brief description of main modules:
 01. Fast_AnimK      : animation(particles,physics,hair,fluid effects etc.)
@@ -23,6 +22,8 @@ Brief description of main modules:
 11. Performance_Time: measuring the running time of different sections of code
 
 All units are in active development and will be supplemented as needed.
+
+Executable demo(SprE_ngin_E_2_D.exe) is included, so run-n-fun.
 
 Screenshots:
    1. Game mode: multithreading, SIMD, 100000 sprites
