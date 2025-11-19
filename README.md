@@ -10,17 +10,17 @@ In the future, a powerful editor for sprites, splines and other game objects wil
 Executable demo(SprE_ngin_E_2_D.exe) is included, so run-n-fun 😉. 
 
 Brief description of main modules:
-1. Fast_AnimK     : animation(particles,physics,hair,fluid effects etc.)
-2. Fast_GL        : initializing GLSL shaders
-3. Fast_Graphics  : rendering of primitives(like a line, rectangle,circle), filters, blitters, CSR-sprites processing etc.
-4. Fast_UI        : working with UI/UX elements
-5. Fast_Scene_Tree: scene object manager
-6. Fast_SIMD      : some SIMD powered routines
-7. Fast_Threads   : working with threads(in particular, implementations of multi-threaded variants of some functions from other modules)
-8. Hot_Keys       : key mapping
-9. Image_Editor   : editing sprites(filters, masks, etc.)
-10. Documentation : descriptions of tools from Draw, AnimK, File
-11. 
+1. Fast_AnimK       : animation(particles,physics,hair,fluid effects etc.)
+2. Fast_GL          : initializing GLSL shaders
+3. Fast_Graphics    : rendering of primitives(like a line, rectangle,circle), filters, blitters, CSR-sprites processing etc.
+4. Fast_UI          : working with UI/UX elements
+5. Fast_Scene_Tree  : scene object manager
+6. Fast_SIMD        : some SIMD powered routines
+7. Fast_Threads     : working with threads(in particular, implementations of multi-threaded variants of some functions from other modules)
+8. Hot_Keys         : key mapping
+9. Image_Editor     : editing sprites(filters, masks, etc.)
+10. Documentation   : descriptions of tools from Draw, AnimK, File
+11. Performance_Time: measuring the running time of different sections of code
 
 Screenshots:
    1. Game mode: multithreading, SIMD, 100000 sprites
