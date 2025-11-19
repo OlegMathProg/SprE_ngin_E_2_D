@@ -16,7 +16,7 @@ Brief description of main modules:
 4. Fast_UI          : working with UI/UX elements
 5. Fast_Scene_Tree  : scene object manager
 6. Fast_SIMD        : some SIMD powered routines
-7. Fast_Threads     : working with threads(in particular, implementations of multi-threaded variants of some functions from other modules)
+7. Fast_Threads     : working with threads(implementations of multi-threaded variants of some functions from other modules)
 8. Hot_Keys         : key mapping
 9. Image_Editor     : editing sprites(filters, masks, etc.)
 10. Documentation   : descriptions of tools from Draw, AnimK, File
