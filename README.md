@@ -7,7 +7,7 @@ Killer features:
 - using multi-threaded processing in conjunction with SIMD optimizations, it is possible to achieve quite decent speed even in software rendering mode.
 
 In the future, a powerful editor for sprites, splines and other game objects will be available.
-Executable demo is included, so run-n-fun 😉. 
+Executable demo(SprE_ngin_E_2_D.exe) is included, so run-n-fun 😉. 
 
 
 
