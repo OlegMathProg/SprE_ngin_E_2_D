@@ -7,7 +7,9 @@
 
 Screenshots:
    1. Game Mode(Multithreading, SIMD, 100000 Sprites)
-<img width="1560" height="895" alt="Editor_Preview0" src="https://github.com/user-attachments/assets/78e7239e-fe7e-460f-8052-791cbf62ddc1" />
+<img width="1560" height="895" alt="Editor_Preview0" src="http<img width="1562" height="897" alt="Editor_Preview1" src="https://github.com/user-attachments/assets/5c0842d1-8c72-4ee7-93c9-1317ff67f3d3" />
+s://github.com/user-attachments/assets/78e7239e-fe7e-460f-8052-791cbf62ddc1" />
    2. Editor Mode(Multithreading, SIMD, Spline with 20000000 points)
-<img width="1560" height="895" alt="Editor_Preview0" src="https://github.com/user-attachments/assets/78e7239e-fe7e-460f-8052-791cbf62ddc1" />
+<img width="1562" height="897" alt="Editor_Preview2" src="https://github.com/user-attachments/assets/46b76d05-e08e-4719-84a4-a9fa3d3e67fd" />
+
 
