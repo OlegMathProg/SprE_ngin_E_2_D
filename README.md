@@ -6,7 +6,7 @@ Killer features:
 - thanks to the "dirty rectangles" technology, scrolling of background objects occurs almost very quickly, which allows for the rendering of very large sprites (more than 30kx30k pixels) as background objects;
 - using multi-threaded processing in conjunction with SIMD optimizations, it is possible to achieve quite decent speed even in software rendering mode.
 
-Brief description
+# Brief description
 
 Supported OS: currently only Windows
 Rendering type: software (OpenGL is used only for outputting the final frame, but shader support is already implemented).
