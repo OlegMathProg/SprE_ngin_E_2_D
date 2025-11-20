@@ -39,7 +39,7 @@ Tools page:
 
 - <img width="32" height="32" alt="Background" src="https://github.com/user-attachments/assets/b31c16ea-4c0d-4dec-95e6-00a9e1b04932" /> Background: background fill;
 
-- <img width="32" height="32" alt="Post-Process" src="https://github.com/user-attachments/assets/01f43e9a-64ea-48ed-84c4-5db9dd605ae3" /> Post-Process: various layer effects like AlpahBlend, Additive, Darken, Blur, Noise, etc. (almost completely implemented only in the source code);
+- <img width="32" height="32" alt="Post-Process" src="https://github.com/user-attachments/assets/01f43e9a-64ea-48ed-84c4-5db9dd605ae3" /> Post-Process: various layer effects like AlpahBlend, Darken, Blur, Noise, etc. (almost completely implemented only in the source code);
 
 - <img width="32" height="32" alt="TileMap" src="https://github.com/user-attachments/assets/4c2b1140-0f6f-4298-8d0e-39ede84f25d0" /> TileMap: drawing sprites using a black-and-white mask (partially implemented, some work on the collision system);
 
