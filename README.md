@@ -29,44 +29,31 @@ Tools page:
 
 - <img width="32" height="32" alt="Text" src="https://github.com/user-attachments/assets/2c5a92d6-1ea4-4274-b13d-c53768cb0da1" /> Text: partially implemented, does not currently support multithreading
 
-- Brush:
-<img width="32" height="32" alt="Brush" src="https://github.com/user-attachments/assets/663ba7e1-190b-4e0f-81e2-c5218a124443" />
+- <img width="32" height="32" alt="Brush" src="https://github.com/user-attachments/assets/663ba7e1-190b-4e0f-81e2-c5218a124443" /> Brush:
 
-- Spline:
-<img width="32" height="32" alt="Spline" src="https://github.com/user-attachments/assets/c91db618-9772-4316-9231-d30c747a991f" />
+- <img width="32" height="32" alt="Spline" src="https://github.com/user-attachments/assets/c91db618-9772-4316-9231-d30c747a991f" /> Spline:
 
-- Select Items:
-<img width="32" height="32" alt="Select Items" src="https://github.com/user-attachments/assets/794deb2c-8780-4386-a2a7-8a68c26ae178" />
+- <img width="32" height="32" alt="Select Items" src="https://github.com/user-attachments/assets/794deb2c-8780-4386-a2a7-8a68c26ae178" /> Select Items:
 
-- Select Background Region:
-<img width="32" height="32" alt="Select Background Region" src="https://github.com/user-attachments/assets/d86f8891-a0da-472d-896a-44c1643da391" />
+- <img width="32" height="32" alt="Select Background Region" src="https://github.com/user-attachments/assets/d86f8891-a0da-472d-896a-44c1643da391" /> Select Background Region:
 
-- Background:
-<img width="32" height="32" alt="Background" src="https://github.com/user-attachments/assets/b31c16ea-4c0d-4dec-95e6-00a9e1b04932" />
+- <img width="32" height="32" alt="Background" src="https://github.com/user-attachments/assets/b31c16ea-4c0d-4dec-95e6-00a9e1b04932" /> Background:
 
-- Post-Process:
-<img width="32" height="32" alt="Post-Process" src="https://github.com/user-attachments/assets/01f43e9a-64ea-48ed-84c4-5db9dd605ae3" />
+- <img width="32" height="32" alt="Post-Process" src="https://github.com/user-attachments/assets/01f43e9a-64ea-48ed-84c4-5db9dd605ae3" /> Post-Process:
 
-- TileMap:
-<img width="32" height="32" alt="TileMap" src="https://github.com/user-attachments/assets/4c2b1140-0f6f-4298-8d0e-39ede84f25d0" />
+- <img width="32" height="32" alt="TileMap" src="https://github.com/user-attachments/assets/4c2b1140-0f6f-4298-8d0e-39ede84f25d0" /> TileMap:
 
-- Snap Grid:
-<img width="32" height="32" alt="Snap Grid" src="https://github.com/user-attachments/assets/c9a93d27-24b5-452b-a71b-140e1cfdb23a" />
+- <img width="32" height="32" alt="Snap Grid" src="https://github.com/user-attachments/assets/c9a93d27-24b5-452b-a71b-140e1cfdb23a" /> Snap Grid:
 
-- Regular Grid:
-<img width="32" height="32" alt="Regular Grid" src="https://github.com/user-attachments/assets/330738ad-3004-4099-a553-a7d2ea3a25af" />
+- <img width="32" height="32" alt="Regular Grid" src="https://github.com/user-attachments/assets/330738ad-3004-4099-a553-a7d2ea3a25af" /> Regular Grid:
 
-- Play:
-<img width="32" height="32" alt="Play" src="https://github.com/user-attachments/assets/e5a1ad40-eef4-457e-b156-83647b5549f0" />
+- <img width="32" height="32" alt="Play" src="https://github.com/user-attachments/assets/e5a1ad40-eef4-457e-b156-83647b5549f0" /> Play:
 
-- Game Settings:
-<img width="32" height="32" alt="Game Settings" src="https://github.com/user-attachments/assets/3e4c9080-b052-49ba-877a-4cafde6f069c" />
+- <img width="32" height="32" alt="Game Settings" src="https://github.com/user-attachments/assets/3e4c9080-b052-49ba-877a-4cafde6f069c" /> Game Settings:
 
-- Add Actor:
-<img width="32" height="32" alt="Add Actor" src="https://github.com/user-attachments/assets/e58e631e-8a5a-40fe-9f50-f4dc2028f5cd" />
+- <img width="32" height="32" alt="Add Actor" src="https://github.com/user-attachments/assets/e58e631e-8a5a-40fe-9f50-f4dc2028f5cd" /> Add Actor:
 
-- Sound Control:
-<img width="32" height="32" alt="Sound Control" src="https://github.com/user-attachments/assets/3a78cb5d-a285-4587-a26b-6f212b3b8021" />
+- <img width="32" height="32" alt="Sound Control" src="https://github.com/user-attachments/assets/3a78cb5d-a285-4587-a26b-6f212b3b8021" /> Sound Control:
 
 
 
