@@ -31,7 +31,7 @@ Tools page:
 
 - <img width="32" height="32" alt="Brush" src="https://github.com/user-attachments/assets/663ba7e1-190b-4e0f-81e2-c5218a124443" /> Brush: not implemented;
 
-- <img width="32" height="32" alt="Spline" src="https://github.com/user-attachments/assets/c91db618-9772-4316-9231-d30c747a991f" /> Spline: ;
+- <img width="32" height="32" alt="Spline" src="https://github.com/user-attachments/assets/c91db618-9772-4316-9231-d30c747a991f" /> Spline: allows you to draw curves/splines(it is the most optimized tool of all and has many settings for rendering, optimization, etc.);
 
 - <img width="32" height="32" alt="Select Items" src="https://github.com/user-attachments/assets/794deb2c-8780-4386-a2a7-8a68c26ae178" /> Select Items: ;
 
