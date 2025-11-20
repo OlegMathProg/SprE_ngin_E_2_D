@@ -8,7 +8,7 @@
 
 # Brief description
 
-<span style="color:red"> fdfdfdf </span> Supported OS: currently only Windows.
+Supported OS: currently only Windows.
 
 Rendering type: software (OpenGL is used only for outputting the final frame, but shader support is already implemented).
 
