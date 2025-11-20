@@ -43,9 +43,9 @@ Tools page:
 
 - <img width="32" height="32" alt="TileMap" src="https://github.com/user-attachments/assets/4c2b1140-0f6f-4298-8d0e-39ede84f25d0" /> TileMap: drawing sprites using a black-and-white mask(partially implemented, some work on the collision system);
 
-- <img width="32" height="32" alt="Snap Grid" src="https://github.com/user-attachments/assets/c9a93d27-24b5-452b-a71b-140e1cfdb23a" /> Snap Grid: ;
+- <img width="32" height="32" alt="Snap Grid" src="https://github.com/user-attachments/assets/c9a93d27-24b5-452b-a71b-140e1cfdb23a" /> Snap Grid: alignment of objects to a grid (only the display of the grid itself is implemented);
 
-- <img width="32" height="32" alt="Regular Grid" src="https://github.com/user-attachments/assets/330738ad-3004-4099-a553-a7d2ea3a25af" /> Regular Grid: ;
+- <img width="32" height="32" alt="Regular Grid" src="https://github.com/user-attachments/assets/330738ad-3004-4099-a553-a7d2ea3a25af" /> Regular Grid: auxiliary grid for displaying the scale of the scene;
 
 - <img width="32" height="32" alt="Play" src="https://github.com/user-attachments/assets/e5a1ad40-eef4-457e-b156-83647b5549f0" /> Play: ;
 
