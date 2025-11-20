@@ -74,6 +74,6 @@ Screenshots:
    4. Editor mode: selected points in splines with 60000000 points
 <img width="1562" height="897" alt="Editor_Preview4" src="https://github.com/user-attachments/assets/b45ded14-7d49-4cf0-bd02-c7578b519ab8" />
 
-   5. Editor mode: tilemap drawing
+   5. Editor mode: drawing tilemap, text, etc.
 <img width="1652" height="896" alt="Editor_Preview5" src="https://github.com/user-attachments/assets/b144ef3b-daf9-4e1d-a312-fe668e68d255" />
 
