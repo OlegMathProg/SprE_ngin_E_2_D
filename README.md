@@ -51,9 +51,9 @@ Tools page:
 
 - <img width="32" height="32" alt="Game Settings" src="https://github.com/user-attachments/assets/3e4c9080-b052-49ba-877a-4cafde6f069c" /> Game Settings: some basic scene settings such as canvas size, display of some objects (partially implemented);
 
-- <img width="32" height="32" alt="Add Actor" src="https://github.com/user-attachments/assets/e58e631e-8a5a-40fe-9f50-f4dc2028f5cd" /> Add Actor: ;
+- <img width="32" height="32" alt="Add Actor" src="https://github.com/user-attachments/assets/e58e631e-8a5a-40fe-9f50-f4dc2028f5cd" /> Add Actor: adding characters (not implemented);
 
-- <img width="32" height="32" alt="Sound Control" src="https://github.com/user-attachments/assets/3a78cb5d-a285-4587-a26b-6f212b3b8021" /> Sound Control: ;
+- <img width="32" height="32" alt="Sound Control" src="https://github.com/user-attachments/assets/3a78cb5d-a285-4587-a26b-6f212b3b8021" /> Sound Control: some sound settings (not implemented);
 
 All units are in active development and will be supplemented as needed.
 
