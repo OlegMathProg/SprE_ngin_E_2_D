@@ -29,6 +29,7 @@ Tools page:
 
 - Text:
 <img width="32" height="32" alt="Text" src="https://github.com/user-attachments/assets/2c5a92d6-1ea4-4274-b13d-c53768cb0da1" />
+
 - Brush:
 <img width="32" height="32" alt="Brush" src="https://github.com/user-attachments/assets/663ba7e1-190b-4e0f-81e2-c5218a124443" />
 - Spline:
