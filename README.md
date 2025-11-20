@@ -29,7 +29,7 @@ Tools page:
 
 - <img width="32" height="32" alt="Text" src="https://github.com/user-attachments/assets/2c5a92d6-1ea4-4274-b13d-c53768cb0da1" /> Text: drawing text(partially implemented, does not currently support multithreading);
 
-- <img width="32" height="32" alt="Brush" src="https://github.com/user-attachments/assets/663ba7e1-190b-4e0f-81e2-c5218a124443" /> Brush: not implemented;
+- <img width="32" height="32" alt="Brush" src="https://github.com/user-attachments/assets/663ba7e1-190b-4e0f-81e2-c5218a124443" /> Brush: reserved for working on sprites on scene, not implemented;
 
 - <img width="32" height="32" alt="Spline" src="https://github.com/user-attachments/assets/c91db618-9772-4316-9231-d30c747a991f" /> Spline: drawing curves/splines(it is the most optimized tool of all and has many settings for rendering, optimization, etc.);
 
