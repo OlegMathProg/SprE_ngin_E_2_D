@@ -1,7 +1,7 @@
 
 # It is a lightweight 2D game engine(written on Object Pascal and compilled in Lazarus). 
  
-Killer features: 
+# Killer features: 
 - thanks to the use of special structures like CSR (Compressed Sparse Row), editing even in software mode becomes incredibly fast (the complexity of the calculation depends only on the number of selected points and is almost independent of the number of all existing points on the scene);
 - thanks to the "dirty rectangles" technology, scrolling of background objects occurs almost very quickly, which allows for the rendering of very large sprites (more than 30kx30k pixels) as background objects;
 - using multi-threaded processing in conjunction with SIMD optimizations, it is possible to achieve quite decent speed even in software rendering mode.
