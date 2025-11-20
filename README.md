@@ -37,9 +37,9 @@ Tools page:
 
 - <img width="32" height="32" alt="Select Background Region" src="https://github.com/user-attachments/assets/d86f8891-a0da-472d-896a-44c1643da391" /> Select Background Region: reserved for working with selective edits to the scene canvas, not implemented;
 
-- <img width="32" height="32" alt="Background" src="https://github.com/user-attachments/assets/b31c16ea-4c0d-4dec-95e6-00a9e1b04932" /> Background: ;
+- <img width="32" height="32" alt="Background" src="https://github.com/user-attachments/assets/b31c16ea-4c0d-4dec-95e6-00a9e1b04932" /> Background: background fill;
 
-- <img width="32" height="32" alt="Post-Process" src="https://github.com/user-attachments/assets/01f43e9a-64ea-48ed-84c4-5db9dd605ae3" /> Post-Process: ;
+- <img width="32" height="32" alt="Post-Process" src="https://github.com/user-attachments/assets/01f43e9a-64ea-48ed-84c4-5db9dd605ae3" /> Post-Process: various layer effects (AlpahBlend, Additive, Darken, Blur, Noise, etc.);
 
 - <img width="32" height="32" alt="TileMap" src="https://github.com/user-attachments/assets/4c2b1140-0f6f-4298-8d0e-39ede84f25d0" /> TileMap: ;
 
