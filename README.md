@@ -33,7 +33,7 @@ Tools page:
 
 - <img width="32" height="32" alt="Spline" src="https://github.com/user-attachments/assets/c91db618-9772-4316-9231-d30c747a991f" /> Spline: allows you to draw curves/splines(it is the most optimized tool of all and has many settings for rendering, optimization, etc.);
 
-- <img width="32" height="32" alt="Select Items" src="https://github.com/user-attachments/assets/794deb2c-8780-4386-a2a7-8a68c26ae178" /> Select Items: ;
+- <img width="32" height="32" alt="Select Items" src="https://github.com/user-attachments/assets/794deb2c-8780-4386-a2a7-8a68c26ae178" /> Select Items: allows editing splines(uses high-performance lazy rendering algorithms and CSR sprite capabilities);
 
 - <img width="32" height="32" alt="Select Background Region" src="https://github.com/user-attachments/assets/d86f8891-a0da-472d-896a-44c1643da391" /> Select Background Region: ;
 
