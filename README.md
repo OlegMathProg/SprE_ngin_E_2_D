@@ -35,7 +35,7 @@ Tools page:
 
 - <img width="32" height="32" alt="Select Items" src="https://github.com/user-attachments/assets/794deb2c-8780-4386-a2a7-8a68c26ae178" /> Select Items: editing splines(uses high-performance lazy rendering algorithms and CSR-sprites capabilities);
 
-- <img width="32" height="32" alt="Select Background Region" src="https://github.com/user-attachments/assets/d86f8891-a0da-472d-896a-44c1643da391" /> Select Background Region: ;
+- <img width="32" height="32" alt="Select Background Region" src="https://github.com/user-attachments/assets/d86f8891-a0da-472d-896a-44c1643da391" /> Select Background Region: reserved for working with selective edits to the scene canvas, not implemented;
 
 - <img width="32" height="32" alt="Background" src="https://github.com/user-attachments/assets/b31c16ea-4c0d-4dec-95e6-00a9e1b04932" /> Background: ;
 
