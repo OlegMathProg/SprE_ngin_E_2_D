@@ -27,7 +27,7 @@ Main modules:
 
 Tools page:
 
-- Text:
+- Text: partially implemented, does not currently support multithreading
 <img width="32" height="32" alt="Text" src="https://github.com/user-attachments/assets/2c5a92d6-1ea4-4274-b13d-c53768cb0da1" />
 
 - Brush:
