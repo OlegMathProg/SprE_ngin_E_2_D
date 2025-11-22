@@ -77,3 +77,6 @@ Screenshots:
    5. Editor mode: drawing tilemap, text, etc.
 <img width="1652" height="896" alt="Editor_Preview5" src="https://github.com/user-attachments/assets/b144ef3b-daf9-4e1d-a312-fe668e68d255" />
 
+   6. Turbo Pascal style UI:
+<img width="1562" height="897" alt="Editor_Preview6" src="https://github.com/user-attachments/assets/2a948d5b-b574-4c22-9cd4-f3e25971d29a" />
+
