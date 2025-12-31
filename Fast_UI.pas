@@ -8,7 +8,7 @@ unit Fast_UI;
 
 interface
 
-uses
+uses //
 
   SysUtils, Classes, Types, LCLIntf, LCLType, Graphics, Controls, Fast_Graphics,
   Performance_Time;
@@ -36,13 +36,14 @@ type
 
   {Selection grid}
   TSelectionGrid  =class {$region -fold}
-    sel_grid_bmp0: T1Byte1Arr;
-    sel_grid_bmp1: TWordArr;
-    sel_grid_bmp2: TLWordArr;
-    constructor Create        (w,h:integer;
-                               b  :byte=0);
+    sel_grid_bmp0      : T1Byte1Arr;
+    sel_grid_bmp1      : TWordArr;
+    sel_grid_bmp2      : TLWordArr;
+    enable_item_picking: boolean;
+    constructor Create        (w,h:integer);
     destructor  Destroy;                     override;
     procedure   GetUIItemPos2D(x,y:integer); inline;
+    procedure   Resize        (w,h:integer); inline;
   end; {$endregion}
   PSelectionGrid  =^TSelectionGrid;
 
@@ -101,7 +102,7 @@ type
       scr_bar_rct_pp_fx_0_draw : boolean;
       scr_bar_rct_pp_fx_1_draw : boolean;
 
-      sel_grid                 : byte;
+      sel_grid_type                 : byte;
 
       // ...:
       oc_bmp_ptr_              : ^Graphics.TBitmap;
@@ -153,6 +154,9 @@ type
       // UI sprite sheet inner margins(x=margin_top, y=margin_bottom):
       sprite_sheet_mrg_arr    : TPtPosArr;
 
+      // Items FX:
+      item_fx_arr             : TFX2Arr;
+
       {Object(ScrollBox) canvas bmp.} {$region -fold}
       // Img. width:
       img_w                   : integer;
@@ -188,8 +192,8 @@ type
       images_label_arr0_ptr   : PString;
       images_label_arr1_ptr   : PString;
       sprite_arr_ptr          : PFastImageItem;
-      txt_prop                : TFTextProp;
-      txt_label_default       : string;
+      txt_items_prop          : TFTextProp;
+      txt_label_prop          : TFTextProp;
       cur_pos                 : TPoint;
       pos_shift               : TPtPosF;
       pos_shift_size          : TPtPos;
@@ -204,17 +208,23 @@ type
       item_rct_size_inc       : integer;
       items_cnt               : integer;
       item_focused_ind        : TColor;
+      // Selected items count:
+      items_sel_cnt           : TColor;
       // Index of first visibe item in scrollbox:
       first_vis_item_ind      : TColor;
       // Items row length:
       row_length              : TColor;
       shift                   : TShiftStateEnum2;
-      sel_grid                : byte;
+      sel_grid_type           : byte;
       multithreading_block_cnt: byte;
       line_break              : boolean;
       fit_item_img_to_rct     : boolean;
+      fx_draw                 : boolean;
       constructor Create;
       destructor  Destroy; override;
+      procedure   GetSelGridType;                                                 inline;
+      procedure   SetTxtPropDefault0;                                             inline;
+      procedure   SetTxtPropDefault1;                                             inline;
       procedure   SetItemLabelVis     (      txt_draw_        :boolean);          inline;
       procedure   RowLengthCalc       (const x0_              :integer);          inline;
       function    RowCntCalc                                           : integer; inline;
@@ -222,12 +232,12 @@ type
       function    ItemsBndRctHeight                                    : integer; inline;
       procedure   Draw;
       procedure   GetItemFocusedInd   (      x,y              :integer);          inline;
-      procedure   GetItemFocusedInd   (      pvt              :TPoint );          inline;
+      procedure   GetItemFocusedInd   (      pvt              :TPoint );
       procedure   GetItemSelectedInd  (      x,y              :integer);          inline;
       procedure   SetItemsUnselected;                                             inline;
       procedure   SetPosShiftSize     (var   pvt              :TPoint;
                                        var   dir              :TMovingDirection;
-                                       const b                :boolean=True);     inline;
+                                       const b                :boolean=True);
       procedure   SetValScrBarsDefault(      scr_bar          :TUIScrollBar)      inline;
       procedure   SetPosScrBarVDefault;
       procedure   SetPosScrBarHDefault;
@@ -258,24 +268,27 @@ implementation
 
 uses
 
-  Fast_Threads, Fast_Main;
+  Fast_Threads{, Fast_Main};
 
 (******************************* Selection grid *******************************) {$region -fold}
 
-constructor TSelectionGrid.Create        (w,h:integer; b:byte=0);         {$region -fold}
+constructor TSelectionGrid.Create        (w,h:integer);         {$region -fold}
 begin
-  case b of
-    0: SetLength(sel_grid_bmp0,w*h);
-    1: SetLength(sel_grid_bmp1,w*h);
-    2: SetLength(sel_grid_bmp2,w*h);
-  end;
+  Resize(w,h);
+  enable_item_picking:=True;
 end; {$endregion}
-destructor  TSelectionGrid.Destroy;                                       {$region -fold}
+destructor  TSelectionGrid.Destroy;                             {$region -fold}
 begin
   inherited Destroy;
 end; {$endregion}
-procedure   TSelectionGrid.GetUIItemPos2D(x,y:integer          ); inline; {$region -fold}
+procedure   TSelectionGrid.GetUIItemPos2D(x,y:integer); inline; {$region -fold}
 begin
+end; {$endregion}
+procedure   TSelectionGrid.Resize        (w,h:integer); inline; {$region -fold}
+begin
+  SetLength(sel_grid_bmp0,w*h);
+  SetLength(sel_grid_bmp1,w*h);
+  SetLength(sel_grid_bmp2,w*h);
 end; {$endregion}
 
 {$endregion}
@@ -286,10 +299,10 @@ end; {$endregion}
 
 constructor TUIObjManager.Create;                                 {$region -fold}
 begin
- {F_MainForm.M_Test_Log.Lines.Text:=IntToStr(ui_grad_prop{grad_prop.}grad_vec.x)+#13+
-                                    IntToStr(ui_grad_prop{grad_prop.}grad_vec.y)+#13+
-                                    IntToStr(ui_grad_prop{grad_prop.}grad_col.x)+#13+
-                                    IntToStr(ui_grad_prop{grad_prop.}grad_col.y);}
+ {F_MainForm.M_Log.Lines.Text:=IntToStr(ui_grad_prop{grad_prop.}grad_vec.x)+#13+
+                               IntToStr(ui_grad_prop{grad_prop.}grad_vec.y)+#13+
+                               IntToStr(ui_grad_prop{grad_prop.}grad_col.x)+#13+
+                               IntToStr(ui_grad_prop{grad_prop.}grad_col.y);}
 end; {$endregion}
 destructor  TUIObjManager.Destroy;                                {$region -fold}
 begin
@@ -319,6 +332,7 @@ begin
   scr_bar_rct_focused_draw :=True;
   scr_bar_rct_pp_fx_0_draw :=True;
   scr_bar_rct_pp_fx_1_draw :=True;
+  sel_grid_type            :=1;
   sprite_sheet_cnt         :=6;
   set_default_pos          :=True;
   bkgnd_draw               :=True;
@@ -344,8 +358,8 @@ begin
 end; {$endregion}
 function    TUIScrollBar.GetSelectedItemInd: TColor; inline; {$region -fold}
 begin
-  if       (MAX_TYPE_VAL[sel_grid]-(1+sprite_sheet_cnt*Ord(scr_bar_type))-item_selected_ind>=0) then
-    Result:=MAX_TYPE_VAL[sel_grid]-(1+sprite_sheet_cnt*Ord(scr_bar_type))-item_selected_ind
+  if       (MAX_TYPE_VAL[sel_grid_type]-(1+sprite_sheet_cnt*Ord(scr_bar_type))-item_selected_ind>=0) then
+    Result:=MAX_TYPE_VAL[sel_grid_type]-(1+sprite_sheet_cnt*Ord(scr_bar_type))-item_selected_ind
   else
     Result:=7;
 end; {$endregion}
@@ -354,7 +368,7 @@ type
   TProc0_=procedure is nested;
 var
   SetSpritePosProc  : array[0..1] of TProc0_;
-  rct               : TPtRect;
+  rct0,rct1         : TPtRect;
   sprite_pos        : TPtPos;
   item_selected_ind_: TColor;
   i                 : integer;
@@ -420,10 +434,19 @@ begin
 
         {Default state FX}
         if scr_bar_rct_pp_fx_0_draw then
-          PPBlurRGB9(oc_bmp_ptr0,
-                     oc_w,
-                     scr_bar_rct,
-                     TBlurType(0));
+          begin
+            rct1:=ClippedRct(PtBounds(rct_clp.left  +1,
+                                      rct_clp.top   +1,
+                                      rct_clp.width -2,
+                                      rct_clp.height-2),
+                             scr_bar_rct);
+            if (rct1.width >0) and
+               (rct1.height>0) then
+              PPBlurRGB9(oc_bmp_ptr0,
+                         oc_w,
+                         rct1,
+                         TBlurType(0));
+          end;
 
         {Image selection grid fill----------} {$region -fold}
         begin
@@ -433,11 +456,11 @@ begin
             sbtVertical  : t:=1;
             sbtHorizontal: t:=1+sprite_sheet_cnt;
           end;}
-          item_selected_ind_:=GetSelectedItemInd; // item_selected_ind_:=MAX_TYPE_VAL[sel_grid]-t-item_selected_ind;
+          item_selected_ind_:=GetSelectedItemInd; // item_selected_ind_:=MAX_TYPE_VAL[sel_grid_type]-t-item_selected_ind;
 
-          b:=((item_focused_ind<=(MAX_TYPE_VAL[sel_grid]-t)) and
-              (item_focused_ind> (MAX_TYPE_VAL[sel_grid]-t-sprite_sheet_cnt)));
-          case sel_grid of
+          b:=((item_focused_ind<=(MAX_TYPE_VAL[sel_grid_type]-t)) and
+              (item_focused_ind> (MAX_TYPE_VAL[sel_grid_type]-t-sprite_sheet_cnt)));
+          case sel_grid_type of
             0: ArrClrB(sel_grid_bmp0_ptr,scr_bar_rct,oc_w,MAXBYTE -t);
             1: ArrClrW(sel_grid_bmp1_ptr,scr_bar_rct,oc_w,MAXWORD -t);
             2: ArrClrL(sel_grid_bmp2_ptr,scr_bar_rct,oc_w,MAXDWORD-t);
@@ -446,21 +469,21 @@ begin
           for i in [2,4,5] do
             begin
               case scr_bar_type of
-                sbtVertical  : rct:=ClippedRct(rct_clp,
+                sbtVertical  : rct0:=ClippedRct(rct_clp,
                                                PtBounds(scr_bar_rct.left,
                                                         sprite_sheet_pos_arr[i].y-2,
                                                         scr_bar_rct.width      -1,
                                                         sprite_sheet_h_arr  [i]-1+3));
-                sbtHorizontal: rct:=ClippedRct(rct_clp,
+                sbtHorizontal: rct0:=ClippedRct(rct_clp,
                                                PtBounds(sprite_sheet_pos_arr[i].x-2,
                                                         scr_bar_rct.top,
                                                         sprite_sheet_w_arr  [i]-1+3,
                                                         scr_bar_rct.height     -1));
               end;
-              case sel_grid of
-                0: ArrClrB(sel_grid_bmp0_ptr,rct,oc_w,MAXBYTE -t-i);
-                1: ArrClrW(sel_grid_bmp1_ptr,rct,oc_w,MAXWORD -t-i);
-                2: ArrClrL(sel_grid_bmp2_ptr,rct,oc_w,MAXDWORD-t-i);
+              case sel_grid_type of
+                0: ArrClrB(sel_grid_bmp0_ptr,rct0,oc_w,MAXBYTE -t-i);
+                1: ArrClrW(sel_grid_bmp1_ptr,rct0,oc_w,MAXWORD -t-i);
+                2: ArrClrL(sel_grid_bmp2_ptr,rct0,oc_w,MAXDWORD-t-i);
               end;
             end;
 
@@ -566,7 +589,6 @@ begin
                  mc_rct);
 
       end;
-
 end; {$endregion}
 
 {$endregion}
@@ -582,18 +604,16 @@ var
 begin
   scr_bar_v               :=TUIScrollBar.Create;
   scr_bar_h               :=TUIScrollBar.Create;
-
  {scr_bar_v.
   scr_bar_draw            :=False;}
-
   SetLength(item_col_arr,7);
   item_col_arr[0]         :=$00665F4D;
   item_col_arr[1]         :=$00858585;
   item_col_arr[2]         :=$003C422F;
   item_col_arr[3]         :=$00C8AE9B;
   item_col_arr[4]         :=$00DDCDC1;
-  item_col_arr[5]         :=clLtGray;
-  item_col_arr[6]         :=clDkGray;
+  item_col_arr[5]         :=clDkGray{clLtGray};
+  item_col_arr[6]         :=clWhite {clDkGray};
   item_rct_size_inc       :=16;
   item_rct_f              :=PtBoundsF(0,0,100,100);
   item_rct_prev_f         :=item_rct_f;
@@ -603,11 +623,15 @@ begin
   mrg_rct_default         :=mrg_rct;
   low_rct_size_limit0     :=PtPos    (048,048);
   low_rct_size_limit1     :=PtPos    (100,100);
+  sel_grid_type           :=1;
   multithreading_block_cnt:=usable_threads_cnt{1};
   line_break              :=True{False};
   fit_item_img_to_rct     :=True{False};
-  txt_prop                :=ftext_default_prop;
-  txt_label_default       :='Import Image or Drag''n''Drop right here';
+  fx_draw                 :=False;
+  txt_items_prop          :=ftext_default_prop;
+  txt_label_prop          :=ftext_default_prop;
+  SetTxtPropDefault0;
+  SetTxtPropDefault1;
   pvt                     :=Default(TPoint);
   shift                   :=ss2Empty;
   SetPosShiftSize(pvt,dir,False);
@@ -616,9 +640,45 @@ destructor  TUIImgScrollBox.Destroy;                                            
 begin
   inherited Destroy;
 end; {$endregion}
+procedure   TUIImgScrollBox.GetSelGridType;                                                                                 inline; {$region -fold}
+begin
+  if (sel_grid_bmp0_ptr<>Nil) then
+      sel_grid_type:=0
+  else
+  if (sel_grid_bmp1_ptr<>Nil) then
+      sel_grid_type:=1
+  else
+  if (sel_grid_bmp2_ptr<>Nil) then
+      sel_grid_type:=2
+end; {$endregion}
+procedure   TUIImgScrollBox.SetTxtPropDefault0;                                                                             inline; {$region -fold}
+begin
+  with txt_items_prop do
+    begin
+      rct_mrg0    :=PtRct(0,0,item_rct.width-2,mrg_rct.bottom-7);
+      rct_mrg1    :=PtRct(0,0,item_rct.width-2,mrg_rct.bottom-7);
+      txt_align   :=DT_LEFT or DT_NOPREFIX{ftext_default_prop.txt_align};
+      txt_color   :=$00E0CCB6;
+      txt_size_max:=12;
+      txt_size    :=txt_size_max;
+    end;
+end; {$endregion}
+procedure   TUIImgScrollBox.SetTxtPropDefault1;                                                                             inline; {$region -fold}
+begin
+  with txt_label_prop do
+    begin
+      txt_align   :=DT_WORDBREAK or DT_CENTER or DT_NOPREFIX;
+      txt_color   :=$00E0CCB6;
+      txt_content :='Import Image or Drag''n''Drop right here';
+      txt_size_max:=12;
+      txt_size    :=txt_size_max;
+      if (oc_bmp_ptr_<>Nil) then
+          oc_bmp_ptr_^.Canvas.Font.height:=-16;
+    end;
+end; {$endregion}
 procedure   TUIImgScrollBox.SetItemLabelVis     (      txt_draw_  :boolean);                                                inline; {$region -fold}
 begin
-  with txt_prop do
+  with txt_items_prop do
     begin
       txt_draw:=txt_draw_;
       if (not txt_draw) then
@@ -670,20 +730,24 @@ var
   SetLinebreakProc: array[0..2] of TProc0_;
   color_info2     : TColorInfo;
   color_info      : TColorInfo;
+  rct_dst         : TPtRect;
   rct0            : TPtRect;
   rct2            : TPtRect;
   rct3            : TPtRect;
   rct4            : TPtRect;
   rct5            : TRect;
+  rct6            : TPtRect;
   pt              : double;
   i,j             : integer;
   x0,y0           : integer;
   x1,y1           : integer;
-  text_height     : integer;
+  text_height_    : integer;
   offset          : integer;
   s               : string='...';
   row_length_     : TColor;
   row_cnt         : TColor=2;
+  fx_color0_      : TColor;
+  fx_color1_      : TColor;
   b0,b1           : boolean;
   set_shift_type  : byte=0;
 
@@ -710,6 +774,105 @@ var
       end;
   end; {$endregion}
 
+  procedure ImageBackgroundFX;     {$region -fold}
+  begin
+    with sprite_arr [(images_inds_arr_ptr+i)^],fast_image_data,fast_image_proc_var do
+      with item_fx_arr[i] do
+        begin
+          fx_color0_:=SetColorInv(fx_color0);
+          fx_color1_:=SetColorInv(fx_color1);
+          if (fx_style0 in [11..21]) then
+            with ui_grad_prop do
+              begin
+                set_grad_to_vis_area:=False{True};
+                rct_ent             :=PtBounds(x0,
+                                               y0,
+                                               item_rct.width,
+                                               item_rct.height);
+                rct_src             :=PtBounds(rct2.left-rct_ent.left,
+                                               rct2.top -rct_ent.top,
+                                               rct2.width,
+                                               rct2.height);
+                SetGradVec                    (0,
+                                               rct_ent.height,
+                                               @ui_grad_prop,
+                                                ui_grad_prop);
+                if (fx_style0=17) then
+                  SetGradCol(fx_color0_,
+                             fx_color1_,
+                             ui_grad_prop)
+                else
+                  SetGradCol(fx_color0,
+                             fx_color1,
+                             ui_grad_prop);
+                GrVNTResVar1(@ui_grad_prop,ui_grad_prop);
+                rct6:=PtBounds(rct2.left,
+                               res_var4,
+                               rct2.width,
+                               res_var2+1);
+                {if (i=12) then
+                  F_MainForm.M_Log.Lines.Text:='rct_ent.top: '   +IntToStr(rct_ent.top   )+#13+
+                                               'rct_ent.height: '+IntToStr(rct_ent.height)+#13+
+                                               'rct_src.top: '   +IntToStr(rct_src.top   )+#13+
+                                               'rct_src.height: '+IntToStr(rct_src.height)+#13+
+                                               'rct2.top: '      +IntToStr(rct2.top      )+#13+
+                                               'rct2.height: '   +IntToStr(rct2.height   );}
+              end;
+            case fx_style0 of
+              00: PPAlphaBlend      (oc_bmp_ptr0,oc_w,rct2,fx_color0_ ,        TRGBA(fx_color0).a                             );
+              01: PPAdditiveDec     (oc_bmp_ptr0,oc_w,rct2,fx_color0_ ,        TRGBA(fx_color0).a                             );
+              02: PPInverseDec      (oc_bmp_ptr0,oc_w,rct2,            MAXBYTE-TRGBA(fx_color0).a                             );
+              03: PPHighlight       (oc_bmp_ptr0,oc_w,rct2,                    TRGBA(fx_color0).a                             );
+              04: PPDarken          (oc_bmp_ptr0,oc_w,rct2,                    TRGBA(fx_color0).a                             );
+              05:
+                case fx_style1 of
+                  0: PPGrayscaleRDec(oc_bmp_ptr0,oc_w,rct2,                    TRGBA(fx_color0).a                             );
+                  1: PPGrayscaleGDec(oc_bmp_ptr0,oc_w,rct2,                    TRGBA(fx_color0).a                             );
+                  2: PPGrayscaleBDec(oc_bmp_ptr0,oc_w,rct2,                    TRGBA(fx_color0).a                             );
+                end;
+              06: PPMonoNoiseDec    (oc_bmp_ptr0,oc_w,rct2,fx_color0_ ,        TRGBA(fx_color0).a                             );
+              07:
+                case fx_style1 of
+                  0: PPRandNoise    (oc_bmp_ptr0,oc_w,rct2,@RandNoise0,        TRGBA(fx_color0).r{255},TRGBA(fx_color1).r{001});
+                  1: PPRandNoise    (oc_bmp_ptr0,oc_w,rct2,@RandNoise1,        TRGBA(fx_color0).r{001},TRGBA(fx_color1).r{001});
+                  2: PPRandNoise    (oc_bmp_ptr0,oc_w,rct2,@RandNoise2,        TRGBA(fx_color0).r{001},TRGBA(fx_color1).r{001});
+                  3: PPRandNoise    (oc_bmp_ptr0,oc_w,rct2,@RandNoise3,        TRGBA(fx_color0).r{127},TRGBA(fx_color1).r{000});
+                  4: PPRandNoise    (oc_bmp_ptr0,oc_w,rct2,@RandNoise4,        TRGBA(fx_color0).r{000},TRGBA(fx_color1).r{002});
+                end;
+              08: PPBlurRGB9        (oc_bmp_ptr0,oc_w,rct2,TBlurType(fx_style1)                                               );
+              09: PPContrast1       (oc_bmp_ptr0,oc_w,rct2,                    TRGBA(fx_color0).a{127}                        );
+              10: PPGamma           (oc_bmp_ptr0,oc_w,rct2,                    TRGBA(fx_color0).a{005}{127}                   );
+            end;
+          {if (grad_vec2.y>
+              grad_vec2.x) then}
+            case fx_style0 of
+              11: PPGrVAlphaBlend   (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,                oc_w);
+              12: PPGrVAdditive     (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,                oc_w);
+              13: PPGrVInverse      (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,                oc_w);
+              14: PPGrV16           (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,@HighlightDec1 ,oc_w);
+              15: PPGrV16           (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,@DarkenDec1    ,oc_w);
+              16:
+                case fx_style1 of
+                  00: PPGrV17       (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,@GrayscaleRDec1,oc_w);
+                  01: PPGrV17       (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,@GrayscaleRDec1,oc_w);
+                  02: PPGrV17       (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,@GrayscaleRDec1,oc_w);
+                end;
+              17: PPGrVMonoNoise    (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,                oc_w);
+              18:
+                case fx_style1 of
+                  0: PPGrVRandNoise (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,@RandNoise0Dec,TRGBA(fx_color0).r{255},TRGBA(fx_color1).r{001},oc_w);
+                  1: PPGrVRandNoise (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,@RandNoise1Dec,TRGBA(fx_color0).r{001},TRGBA(fx_color1).r{001},oc_w);
+                  2: PPGrVRandNoise (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,@RandNoise2Dec,TRGBA(fx_color0).r{001},TRGBA(fx_color1).r{001},oc_w);
+                  3: PPGrVRandNoise (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,@RandNoise3Dec,TRGBA(fx_color0).r{127},TRGBA(fx_color1).r{000},oc_w);
+                  4: PPGrVRandNoise (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,@RandNoise4Dec,TRGBA(fx_color0).r{000},TRGBA(fx_color1).r{002},oc_w);
+                end;
+              19: ;//PPGrV19        (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,@GrayscaleRDec1,oc_w);
+              20: PPGrVContrast     (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,                oc_w);
+              21: PPGrVGamma        (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,fx_gamma_pow,   oc_w);
+            end;
+        end;
+  end; {$endregion}
+
 begin
   if (rct_clp.width <=0) or
      (rct_clp.height<=0) then
@@ -718,26 +881,32 @@ begin
   SetLinebreakProc[1]:=@SetLinebreak1;
   SetLinebreakProc[2]:=@SetLinebreak2;
   rct0               :=PtBounds(0,0,img_w,img_h);
+ {if (rct0.width <=0) or
+     (rct0.height<=0) then
+    Exit;}
   SetColorInfo(item_col_arr[0],color_info);
 
   {ScrollBox selection grid-----------} {$region -fold}
-  if         (sel_grid_bmp0_ptr<>Nil) then
-    begin
-      ArrClrB(sel_grid_bmp0_ptr,rct0,oc_w,MAXBYTE);
-              sel_grid:=0;
-    end
-  else
-  if         (sel_grid_bmp1_ptr<>Nil) then
-    begin
-      ArrClrW(sel_grid_bmp1_ptr,rct0,oc_w,MAXWORD);
-              sel_grid:=1;
-    end
-  else
-  if         (sel_grid_bmp2_ptr<>Nil) then
-    begin
-      ArrClrL(sel_grid_bmp2_ptr,rct0,oc_w,MAXDWORD);
-              sel_grid:=2;
-    end; {$endregion}
+  case sel_grid_type of
+    0: ArrClrB(sel_grid_bmp0_ptr,rct0,oc_w,MAX_TYPE_VAL[0]);
+    1: ArrClrW(sel_grid_bmp1_ptr,rct0,oc_w,MAX_TYPE_VAL[1]);
+    2: ArrClrL(sel_grid_bmp2_ptr,rct0,oc_w,MAX_TYPE_VAL[2]);
+  end; {$endregion}
+
+  {Debug------------------------------} {$region -fold}
+  {
+  rct_dst:=rct0;
+  F_MainForm.M_Log.Lines.Text:=IntToStr(oc_w)+#13+
+                               IntToStr(oc_h)+#13+
+                               IntToStr(Byte(sel_grid_bmp1_ptr=Nil))+#13+
+                               IntToStr(Byte(sel_grid_bmp1_ptr+rct_dst.left+rct_dst.top*oc_w=Nil))+#13+
+                               IntToStr(Byte(sel_grid_bmp1_ptr+rct_dst.left+oc_w*(rct_dst.height-1)+rct_dst.top*oc_w=Nil));
+  ArrClrL(oc_bmp_ptr0,rct0,oc_w,clRed);
+  PPFloodFill(oc_bmp_ptr0,
+              oc_w,
+              rct0,
+              clGreen{color_info.pix_col});
+  } {$endregion}
 
   {ScrollBox background---------------} {$region -fold}
   PPFloodFill(oc_bmp_ptr0,
@@ -752,6 +921,8 @@ begin
 
     {ScrollBox items drawing----------} {$region -fold}
     begin
+
+      SetTxtPropDefault0;
 
       {Icons-----------------------} {$region -fold}
       x0:={Trunc}Round(pos_shift.x);
@@ -829,25 +1000,12 @@ begin
                          mc_rct); {$endregion}
 
                 {Image background FX} {$region -fold}
-                {case i of
-                  00: PPAlphaBlend       (oc_bmp_ptr0,oc_w,rct2,color_info.pix_col,127           );
-                  01: PPAdditiveDec      (oc_bmp_ptr0,oc_w,rct2,color_info.pix_col,100           );
-                  02: PPInverseDec       (oc_bmp_ptr0,oc_w,rct2,                   MAXBYTE-255   );
-                  03: PPHighlight        (oc_bmp_ptr0,oc_w,rct2,                   100           );
-                  04: PPDarken           (oc_bmp_ptr0,oc_w,rct2,                   100           );
-                  05: PPGrayscaleRDec    (oc_bmp_ptr0,oc_w,rct2,                   255           );
-                  06: PPGrayscaleGDec    (oc_bmp_ptr0,oc_w,rct2,                   255           );
-                  07: PPGrayscaleBDec    (oc_bmp_ptr0,oc_w,rct2,                   255           );
-                  08: PPMonoNoiseDec     (oc_bmp_ptr0,oc_w,rct2,color_info.pix_col,100           );
-                  09: PPRandNoise        (oc_bmp_ptr0,oc_w,rct2,@RandNoise0,       255,       001);
-                  10: PPRandNoise        (oc_bmp_ptr0,oc_w,rct2,@RandNoise1,       001,       001);
-                  11: PPRandNoise        (oc_bmp_ptr0,oc_w,rct2,@RandNoise2,       001,       001);
-                  12: PPRandNoise        (oc_bmp_ptr0,oc_w,rct2,@RandNoise3,       127,       000);
-                  13: PPRandNoise        (oc_bmp_ptr0,oc_w,rct2,@RandNoise4,       000,       002);
-                  14: PPBlurRGB9         (oc_bmp_ptr0,oc_w,rct2,btRGB                            );
-                  15: PPContrast1        (oc_bmp_ptr0,oc_w,rct2,                   127           );
-                  16: PPGamma            (oc_bmp_ptr0,oc_w,rct2,                   005{127}      );
-                end;} {$endregion}
+                if fx_draw then
+                  if (item_fx_arr<>Nil) then
+                    if (i<Length(item_fx_arr)) then
+                      if (rct2.width >0) and
+                         (rct2.height>0) then
+                        ImageBackgroundFX; {$endregion}
 
                 Inc(x0,item_rct.width+mrg_rct.{left}right);
               end; {$endregion}
@@ -917,47 +1075,12 @@ begin
                        mc_rct); {$endregion}
 
               {Image background FX} {$region -fold}
-              {case i of
-              //00: PPAlphaBlend       (oc_bmp_ptr0,oc_w,rct2,color_info.pix_col,127           );
-                01: PPAdditiveDec      (oc_bmp_ptr0,oc_w,rct2,color_info.pix_col,100           );
-                02: PPInverseDec       (oc_bmp_ptr0,oc_w,rct2,                   MAXBYTE-255   );
-                03: PPHighlight        (oc_bmp_ptr0,oc_w,rct2,                   100           );
-                04: PPDarken           (oc_bmp_ptr0,oc_w,rct2,                   100           );
-                05: PPGrayscaleRDec    (oc_bmp_ptr0,oc_w,rct2,                   255           );
-                06: PPGrayscaleGDec    (oc_bmp_ptr0,oc_w,rct2,                   255           );
-                07: PPGrayscaleBDec    (oc_bmp_ptr0,oc_w,rct2,                   255           );
-                08: PPMonoNoiseDec     (oc_bmp_ptr0,oc_w,rct2,color_info.pix_col,100           );
-                09: PPRandNoise        (oc_bmp_ptr0,oc_w,rct2,@RandNoise0,       255,       001);
-                10: PPRandNoise        (oc_bmp_ptr0,oc_w,rct2,@RandNoise1,       001,       001);
-                11: PPRandNoise        (oc_bmp_ptr0,oc_w,rct2,@RandNoise2,       001,       001);
-                12: PPRandNoise        (oc_bmp_ptr0,oc_w,rct2,@RandNoise3,       127,       000);
-                13: PPRandNoise        (oc_bmp_ptr0,oc_w,rct2,@RandNoise4,       000,       002);
-                14: PPBlurRGB9         (oc_bmp_ptr0,oc_w,rct2,btRGB                            );
-                15: PPContrast1        (oc_bmp_ptr0,oc_w,rct2,                   127           );
-                16: PPGamma            (oc_bmp_ptr0,oc_w,rct2,                   005{127}      );
-                00{17}:
-                  begin
-                    with ui_grad_prop do
-                      begin
-                        rct_ent.height      :=100;
-                        set_grad_to_vis_area:=True{False};
-                        SetGradVec(0,
-                                   item_rct.height,
-                                   @ui_grad_prop,
-                                    ui_grad_prop);
-                        SetGradCol($00000000+$000000FF,
-                                   $FF000000+$00FF0000,
-                                   ui_grad_prop);
-                      end;
-                    PPGrVAlphaBlend    (oc_bmp_ptr0,oc_w,rct2,ui_grad_prop.grad_prop);
-
-                   {F_MainForm.M_Test_Log.Lines.Text:=IntToStr(grad_vec.x)+#13+
-                                                      IntToStr(grad_vec.y)+#13+
-                                                      IntToStr(grad_col.x)+#13+
-                                                      IntToStr(grad_col.y);}
-
-                  end;
-              end;} {$endregion}
+              if fx_draw then
+                if (item_fx_arr<>Nil) then
+                  if (i<Length(item_fx_arr)) then
+                    if (rct2.width >0) and
+                       (rct2.height>0) then
+                      ImageBackgroundFX; {$endregion}
 
               Inc(x0,item_rct.width+mrg_rct.{left}right);
             end;
@@ -977,18 +1100,18 @@ begin
           rct3:=ClippedRct(rct_clp,
                            PtBounds(x0+1,
                                     y0+item_rct.height+4,
-                                    txt_prop.rct_mrg0.width,
-                                    txt_prop.rct_mrg0.height));
+                                    txt_items_prop.rct_mrg0.width,
+                                    txt_items_prop.rct_mrg0.height));
           rct4:=ClippedRct(rct_clp,
                            PtBounds(x0,
                                     y0+item_rct.height+3,
-                                    txt_prop.rct_mrg0.width +1,
-                                    txt_prop.rct_mrg0.height+1));
+                                    txt_items_prop.rct_mrg0.width +1,
+                                    txt_items_prop.rct_mrg0.height+1));
 
           {Image icon rectangle to selection grid} {$region -fold}
           if (rct2.width >0) and
              (rct2.height>0) then
-            case sel_grid of
+            case sel_grid_type of
               0: ArrClrB(sel_grid_bmp0_ptr,rct2,oc_w,BYTE (2*i));
               1: ArrClrW(sel_grid_bmp1_ptr,rct2,oc_w,WORD (2*i));
               2: ArrClrL(sel_grid_bmp2_ptr,rct2,oc_w,DWORD(2*i));
@@ -997,7 +1120,7 @@ begin
           {Image icon label     to selection grid} {$region -fold}
           if (rct3.width >0) and
              (rct3.height>0) then
-            case sel_grid of
+            case sel_grid_type of
               0: ArrClrB(sel_grid_bmp0_ptr,rct3,oc_w,BYTE (2*i+1));
               1: ArrClrW(sel_grid_bmp1_ptr,rct3,oc_w,WORD (2*i+1));
               2: ArrClrL(sel_grid_bmp2_ptr,rct3,oc_w,DWORD(2*i+1));
@@ -1022,7 +1145,7 @@ begin
                        color_info.pix_col); {$endregion}
 
           {Image icon label----------------------} {$region -fold}
-          with txt_prop do
+          with txt_items_prop do
             if txt_draw then
               begin
                 if (item_rct.width <=low_rct_size_limit1.x) or
@@ -1032,7 +1155,7 @@ begin
                   txt_content:=Copy((images_label_arr1_ptr+i)^,1,
                         Min2(Length((images_label_arr1_ptr+i)^),    Trunc(1.4{1.45}*item_rct.width/txt_size)))+s{'Img '+IntToStr(i)}
                 else
-                  txt_content:=     (images_label_arr1_ptr+i)^;{'Img '+IntToStr(i)};
+                  txt_content:=' '+ (images_label_arr1_ptr+i)^;{'Img '+IntToStr(i)};
                 bkgnd_draw1  :=True;
                 bkgnd_col1   :=Darken2(item_col_arr[0],10);
                 Text(x0+1,
@@ -1041,7 +1164,7 @@ begin
                      oc_w,
                      @rct_clp,
                      oc_bmp_ptr_^.Canvas,
-                     txt_prop);
+                     txt_items_prop);
               end; {$endregion}
 
           {Image icon label FX: focused----------} {$region -fold}
@@ -1087,7 +1210,7 @@ begin
       if    scr_bar_v.scr_bar_draw then
         if (not b0) then
           begin
-            scr_bar_v.sel_grid        :=sel_grid;
+            scr_bar_v.sel_grid_type   :=sel_grid_type;
             scr_bar_v.item_focused_ind:=item_focused_ind;
             scr_bar_v.Draw(rct_clp);
           end; {$endregion}
@@ -1098,7 +1221,7 @@ begin
       if    scr_bar_h.scr_bar_draw then
         if (not b1) then
           begin
-            scr_bar_h.sel_grid        :=sel_grid;
+            scr_bar_h.sel_grid_type   :=sel_grid_type;
             scr_bar_h.item_focused_ind:=item_focused_ind;
             scr_bar_h.Draw(rct_clp);
           end; {$endregion}
@@ -1129,35 +1252,34 @@ begin
   else
 
     {ScrollBox default background text} {$region -fold}
-    with txt_prop do
+    with txt_label_prop do
       begin
-        txt_content:=txt_label_default;
-        txt_align  :=DT_WORDBREAK or DT_CENTER or DT_NOPREFIX;
-        rct5       :=Rect(rct0.left +10,
-                          rct0.top,
-                          rct0.right-10,
-                          rct0.bottom);
+        SetTxtPropDefault1;
+        rct5:=Rect(rct0.left +10,
+                   rct0.top,
+                   rct0.right-10,
+                   rct0.bottom);
         DrawText(oc_bmp_ptr_^.Canvas.Handle,
                  PChar (txt_content),
                  Length(txt_content),
                  rct5,
                  DT_WORDBREAK or DT_CALCRECT);
-        text_height:=  rct5.bottom-rct5.top;
-        offset     :=((rct0.bottom-rct0.top)-text_height)>>1;
-        rct5       :=Rect(rct0.left +10,
-                          rct0.top,
-                          rct0.right-10,
-                          rct0.bottom);
+        text_height_:=  rct5.bottom-rct5.top;
+        offset      :=((rct0.bottom-rct0.top)-text_height_)>>1;
+        rct5        :=Rect(rct0.left +10,
+                           rct0.top,
+                           rct0.right-10,
+                           rct0.bottom);
         Inc(rct5.top,offset);
-        rct_mrg0   :=PtRct( 0,0,rct0    .width   ,rct0.height);
-        rct_mrg1   :=PtRct(10,0,rct_mrg0.width-10,text_height);
+        rct_mrg0    :=PtRct( 0,0,rct0    .width   ,rct0.height );
+        rct_mrg1    :=PtRct(10,0,rct_mrg0.width-10,text_height_);
         Text(0,
              rct5.top,
              oc_bmp_ptr0,
              oc_w,
              @rct_clp,
              oc_bmp_ptr_^.Canvas,
-             txt_prop);
+             txt_label_prop);
        {rct_mrg0   :=rct0;
         rct_mrg1   :=rct0;
         Text(0,
@@ -1166,7 +1288,7 @@ begin
              oc_w,
              @rct_clp,
              oc_bmp_ptr_^.Canvas,
-             txt_prop);}
+             txt_label_prop);}
       end; {$endregion}
 
   //exec_timer.Stop;
@@ -1174,7 +1296,7 @@ begin
 
   {ScrollBox bounding rectangle-------} {$region -fold}
   // Bounding rectangle selection grid:
-  case sel_grid of
+  case sel_grid_type of
     0:
       begin
         RectangleB(0,
@@ -1245,37 +1367,49 @@ begin
       Rectangle(1,1,img_w-1,img_h-1);
     end; {$endregion}
 
-  //F_MainForm.M_Test_Log.Lines.Text:=IntToStr(exec_time0);
+  //F_MainForm.M_Log.Lines.Text:=IntToStr(exec_time0);
 
 end; {$endregion}
 procedure   TUIImgScrollBox.GetItemFocusedInd   (      x,y        :integer);                                                inline; {$region -fold}
 begin
-  case sel_grid of
+  case sel_grid_type of
     0:
       begin
-        if (sel_grid_bmp0_ptr=Nil) then
-          Exit;
-        item_focused_ind              :=(sel_grid_bmp0_ptr+x+y*oc_w)^;
+        if (sel_grid_bmp0_ptr         =Nil) or
+           (sel_grid_bmp0_ptr+x+y*oc_w=Nil) then
+          begin
+            item_focused_ind:=MAX_TYPE_VAL[sel_grid_type];
+            Exit;
+          end;
+        item_focused_ind:=(sel_grid_bmp0_ptr+x+y*oc_w)^;
       end;
     1:
       begin
-        if (sel_grid_bmp1_ptr=Nil) then
-          Exit;
-        item_focused_ind              :=(sel_grid_bmp1_ptr+x+y*oc_w)^;
+        if (sel_grid_bmp1_ptr         =Nil) or
+           (sel_grid_bmp1_ptr+x+y*oc_w=Nil) then
+          begin
+            item_focused_ind:=MAX_TYPE_VAL[sel_grid_type];
+            Exit;
+          end;
+        item_focused_ind:=(sel_grid_bmp1_ptr+x+y*oc_w)^;
       end;
     2:
       begin
-        if (sel_grid_bmp2_ptr=Nil) then
-          Exit;
-        item_focused_ind              :=(sel_grid_bmp2_ptr+x+y*oc_w)^;
+        if (sel_grid_bmp2_ptr         =Nil) or
+           (sel_grid_bmp2_ptr+x+y*oc_w=Nil) then
+          begin
+            item_focused_ind:=MAX_TYPE_VAL[sel_grid_type];
+            Exit;
+          end;
+        item_focused_ind:=(sel_grid_bmp2_ptr+x+y*oc_w)^;
       end;
   end;
-  scr_bar_v.scr_bar_rct_focused_bnd:=(item_focused_ind<=(MAX_TYPE_VAL[sel_grid]-1                             )) and
-                                     (item_focused_ind> (MAX_TYPE_VAL[sel_grid]-1-scr_bar_v.sprite_sheet_cnt  ));
-  scr_bar_h.scr_bar_rct_focused_bnd:=(item_focused_ind<=(MAX_TYPE_VAL[sel_grid]-1-scr_bar_h.sprite_sheet_cnt  )) and
-                                     (item_focused_ind> (MAX_TYPE_VAL[sel_grid]-1-scr_bar_h.sprite_sheet_cnt*2));
+  scr_bar_v.scr_bar_rct_focused_bnd:=(item_focused_ind<=(MAX_TYPE_VAL[sel_grid_type]-1                             )) and
+                                     (item_focused_ind> (MAX_TYPE_VAL[sel_grid_type]-1-scr_bar_v.sprite_sheet_cnt  ));
+  scr_bar_h.scr_bar_rct_focused_bnd:=(item_focused_ind<=(MAX_TYPE_VAL[sel_grid_type]-1-scr_bar_h.sprite_sheet_cnt  )) and
+                                     (item_focused_ind> (MAX_TYPE_VAL[sel_grid_type]-1-scr_bar_h.sprite_sheet_cnt*2));
 end; {$endregion}
-procedure   TUIImgScrollBox.GetItemFocusedInd   (      pvt        :TPoint );                                                inline; {$region -fold}
+procedure   TUIImgScrollBox.GetItemFocusedInd   (      pvt        :TPoint );                                                        {$region -fold}
 begin
   GetItemFocusedInd(pvt.x,pvt.y);
 end; {$endregion}
@@ -1283,7 +1417,7 @@ procedure   TUIImgScrollBox.GetItemSelectedInd  (      x,y        :integer);    
 var
   item_focused_ind_max: TColor;
 begin
-  case sel_grid of
+  case sel_grid_type of
     0:
       if (sel_grid_bmp0_ptr=Nil) then
         Exit;
@@ -1294,7 +1428,7 @@ begin
       if (sel_grid_bmp2_ptr=Nil) then
         Exit;
   end;
-  item_focused_ind_max             :=MAX_TYPE_VAL[sel_grid];
+  item_focused_ind_max             :=MAX_TYPE_VAL[sel_grid_type];
   if    scr_bar_v.scr_bar_rct_focused_bnd then
     begin
       if (not (Byte(item_focused_ind_max-1-item_focused_ind                           ) in [0,1,3])) then
@@ -1318,7 +1452,7 @@ procedure   TUIImgScrollBox.SetItemsUnselected;                                 
 var
   item_focused_ind_max: TColor;
 begin
-  case sel_grid of
+  case sel_grid_type of
     0:
       if (sel_grid_bmp0_ptr=Nil) then
         Exit;
@@ -1329,11 +1463,11 @@ begin
       if (sel_grid_bmp2_ptr=Nil) then
         Exit;
   end;
-  item_focused_ind_max       :=MAX_TYPE_VAL[sel_grid];
+  item_focused_ind_max       :=MAX_TYPE_VAL[sel_grid_type];
   scr_bar_v.item_selected_ind:=item_focused_ind_max;
   scr_bar_h.item_selected_ind:=item_focused_ind_max;
 end; {$endregion}
-procedure   TUIImgScrollBox.SetPosShiftSize     (var   pvt        :TPoint; var dir:TMovingDirection; const b:boolean=True); inline; {$region -fold}
+procedure   TUIImgScrollBox.SetPosShiftSize     (var   pvt        :TPoint; var dir:TMovingDirection; const b:boolean=True);         {$region -fold}
 var
   pvt0          : TPoint;
   v0,v1,v2,v3,v4: double;
@@ -1739,9 +1873,9 @@ begin
 end; {$endregion}
 procedure   TUIImgScrollBox.OnMouseLeave;                                                                                           {$region -fold}
 begin
-  item_focused_ind                 :=MAX_TYPE_VAL[sel_grid];
-  scr_bar_v.item_selected_ind      :=MAX_TYPE_VAL[sel_grid];
-  scr_bar_h.item_selected_ind      :=MAX_TYPE_VAL[sel_grid];
+  item_focused_ind                 :=MAX_TYPE_VAL[sel_grid_type];
+  scr_bar_v.item_selected_ind      :=MAX_TYPE_VAL[sel_grid_type];
+  scr_bar_h.item_selected_ind      :=MAX_TYPE_VAL[sel_grid_type];
   scr_bar_v.scr_bar_rct_focused_bnd:=False;
   scr_bar_h.scr_bar_rct_focused_bnd:=False;
 end; {$endregion}

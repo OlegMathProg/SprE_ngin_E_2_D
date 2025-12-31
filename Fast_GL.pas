@@ -61,7 +61,10 @@ const
                                     ((-0.8,-0.8, 0.0),
                                      ( 0.8,-0.8, 0.0),
                                      ( 0.8, 0.8, 0.0)));
-  step      : GLfloat=0.01;
+  step      : GLfloat             =0.01;
+  GLUT_DOUBLE                     =02;
+  GLUT_RGB                        =00;
+  GLUT_DEPTH                      =16;
 
 
 

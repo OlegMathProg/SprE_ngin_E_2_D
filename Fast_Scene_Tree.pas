@@ -812,7 +812,7 @@ var
 
 implementation
 
-uses
+uses //
 
   Fast_Main;
 
@@ -886,7 +886,7 @@ begin
 end; {$endregion}
 procedure   TSceneTree.FilScene              (start_ind,end_ind:TColor);                                                                                                                                       {$ifdef Linux}[local];{$endif} {$region -fold}
 var
-  editor_or_game     : set of byte;
+//editor_or_game     : set of byte;
   start_ind0,end_ind0: integer;
   i                  : integer;
 begin
@@ -1268,14 +1268,14 @@ begin
   New(node_data_pointer);
   node_data_pointer^.g_ind:=g_ind;
   case obj_var.obj_arr[g_ind].koo of
-    kooBkgnd: node_with_data.ImageIndex:=05;
+    kooBkgnd: node_with_data.ImageIndex:=07;
     kooRGrid: node_with_data.ImageIndex:=09;
     kooSGrid: node_with_data.ImageIndex:=08;
     kooGroup: node_with_data.ImageIndex:=16;
-    kooTlMap: node_with_data.ImageIndex:=07;
+    kooTlMap: node_with_data.ImageIndex:=02;
     kooActor: node_with_data.ImageIndex:=12;
     kooPProc: node_with_data.ImageIndex:=06;
-    kooCurve: node_with_data.ImageIndex:=02;
+    kooCurve: node_with_data.ImageIndex:=03;
     kooFText: node_with_data.ImageIndex:=00;
   end;
   node_with_data.Data:=PNodeData(node_data_pointer);
