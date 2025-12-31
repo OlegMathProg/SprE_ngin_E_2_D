@@ -72,7 +72,7 @@
               <ShowHintsForUnusedUnitsInMainSrc Value="True"/>
             </Verbosity>
             <CompilerMessages>
-              <IgnoredMessages idx2005="True"/>
+              <IgnoredMessages idx5027="True" idx2005="True"/>
             </CompilerMessages>
             <CustomOptions Value="-Ratt
 -Rintel"/>

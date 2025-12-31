@@ -7,7 +7,7 @@ unit Hot_Keys;
 
 interface
 
-uses
+uses ///
 
   Forms, Controls, Graphics, Dialogs, ComCtrls, ExtCtrls, Classes, SysUtils,
   LCLType;
