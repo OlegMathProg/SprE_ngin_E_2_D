@@ -8,7 +8,7 @@ unit Fast_UI;
 
 interface
 
-uses //
+uses
 
   SysUtils, Classes, Types, LCLIntf, LCLType, Graphics, Controls, Fast_Graphics,
   Performance_Time;
@@ -151,6 +151,14 @@ type
       // Items color scheme:
       item_col_arr            : TColorArr;
 
+      // Items, selected (indices):
+      items_sel_inds_arr      : TColorArr;
+
+      // Items, selected (flags):
+      // True  -     selected
+      // False - not selected;
+      is_selected_arr         : TBool1Arr;
+
       // UI sprite sheet inner margins(x=margin_top, y=margin_bottom):
       sprite_sheet_mrg_arr    : TPtPosArr;
 
@@ -210,6 +218,7 @@ type
       item_focused_ind        : TColor;
       // Selected items count:
       items_sel_cnt           : TColor;
+      items_sel_cnt_max       : TColor;
       // Index of first visibe item in scrollbox:
       first_vis_item_ind      : TColor;
       // Items row length:
@@ -217,6 +226,8 @@ type
       shift                   : TShiftStateEnum2;
       sel_grid_type           : byte;
       multithreading_block_cnt: byte;
+      img_icon_fx_focused_pow : byte;
+      img_label_focused_draw  : boolean;
       line_break              : boolean;
       fit_item_img_to_rct     : boolean;
       fx_draw                 : boolean;
@@ -234,6 +245,7 @@ type
       procedure   GetItemFocusedInd   (      x,y              :integer);          inline;
       procedure   GetItemFocusedInd   (      pvt              :TPoint );
       procedure   GetItemSelectedInd  (      x,y              :integer);          inline;
+      procedure   SetItemsUnfocused;                                              inline;
       procedure   SetItemsUnselected;                                             inline;
       procedure   SetPosShiftSize     (var   pvt              :TPoint;
                                        var   dir              :TMovingDirection;
@@ -606,14 +618,15 @@ begin
   scr_bar_h               :=TUIScrollBar.Create;
  {scr_bar_v.
   scr_bar_draw            :=False;}
-  SetLength(item_col_arr,7);
+  SetLength(item_col_arr,8);
   item_col_arr[0]         :=$00665F4D;
   item_col_arr[1]         :=$00858585;
-  item_col_arr[2]         :=$003C422F;
+  item_col_arr[2]         :=$00382127;//}$003C422F;
   item_col_arr[3]         :=$00C8AE9B;
   item_col_arr[4]         :=$00DDCDC1;
-  item_col_arr[5]         :=clDkGray{clLtGray};
-  item_col_arr[6]         :=clWhite {clDkGray};
+  item_col_arr[5]         :=clDkGray; //}clLtGray;
+  item_col_arr[6]         :=clWhite;  //}clDkGray;
+  item_col_arr[7]         :=clLtGray;
   item_rct_size_inc       :=16;
   item_rct_f              :=PtBoundsF(0,0,100,100);
   item_rct_prev_f         :=item_rct_f;
@@ -623,10 +636,14 @@ begin
   mrg_rct_default         :=mrg_rct;
   low_rct_size_limit0     :=PtPos    (048,048);
   low_rct_size_limit1     :=PtPos    (100,100);
-  sel_grid_type           :=1;
-  multithreading_block_cnt:=usable_threads_cnt{1};
-  line_break              :=True{False};
-  fit_item_img_to_rct     :=True{False};
+  items_sel_cnt           :=00;
+  items_sel_cnt_max       :=01;
+  sel_grid_type           :=01;
+  multithreading_block_cnt:=usable_threads_cnt;//}1;
+  img_icon_fx_focused_pow :=35;
+  img_label_focused_draw  :=True;//}False;
+  line_break              :=True;//}False;
+  fit_item_img_to_rct     :=True;//}False;
   fx_draw                 :=False;
   txt_items_prop          :=ftext_default_prop;
   txt_label_prop          :=ftext_default_prop;
@@ -735,8 +752,9 @@ var
   rct2            : TPtRect;
   rct3            : TPtRect;
   rct4            : TPtRect;
-  rct5            : TRect;
+  rct5            : TPtRect;
   rct6            : TPtRect;
+  rct7            : TRect;
   pt              : double;
   i,j             : integer;
   x0,y0           : integer;
@@ -774,7 +792,7 @@ var
       end;
   end; {$endregion}
 
-  procedure ImageBackgroundFX;     {$region -fold}
+  procedure ImgBackgroundFX;       {$region -fold}
   begin
     with sprite_arr [(images_inds_arr_ptr+i)^],fast_image_data,fast_image_proc_var do
       with item_fx_arr[i] do
@@ -949,14 +967,29 @@ begin
                                           item_rct.width,
                                           item_rct.height));
 
-                {Image background---} {$region -fold}
+                {Image icon FX: selected} {$region -fold}
+                if is_selected_arr[i] then
+                  begin
+                    SetColorInfo(item_col_arr[7],color_info);
+                    rct5:=ClippedRct(rct_clp,
+                                     PtBounds(x0-2,
+                                              y0-2,
+                                              item_rct.width +4,
+                                              item_rct.height+4+2+txt_items_prop.rct_mrg0.height+2));
+                    PPFloodFill     (oc_bmp_ptr0,
+                                     oc_w,
+                                     rct5,
+                                     color_info.pix_col);
+                  end; {$endregion}
+
+                {Image background-------} {$region -fold}
                 SetColorInfo(item_col_arr[1],color_info);
                 PPFloodFill (oc_bmp_ptr0,
                              oc_w,
                              rct2,
                              color_info.pix_col); {$endregion}
 
-                {Image icon drawing-} {$region -fold}
+                {Image icon drawing-----} {$region -fold}
                 fast_image_data_ptr0:=@fast_image_data;
 
                 {Set sprites background params:scrollbox canvas(surface)}
@@ -1005,7 +1038,7 @@ begin
                     if (i<Length(item_fx_arr)) then
                       if (rct2.width >0) and
                          (rct2.height>0) then
-                        ImageBackgroundFX; {$endregion}
+                        ImgBackgroundFX; {$endregion}
 
                 Inc(x0,item_rct.width+mrg_rct.{left}right);
               end; {$endregion}
@@ -1023,14 +1056,29 @@ begin
                                         item_rct.width,
                                         item_rct.height));
 
-              {Image background---} {$region -fold}
+              {Image icon FX: selected} {$region -fold}
+              if is_selected_arr[i] then
+                begin
+                  SetColorInfo(item_col_arr[7],color_info);
+                  rct5:=ClippedRct(rct_clp,
+                                   PtBounds(x0-2,
+                                            y0-2,
+                                            item_rct.width +4,
+                                            item_rct.height+4+2+txt_items_prop.rct_mrg0.height+2));
+                  PPFloodFill     (oc_bmp_ptr0,
+                                   oc_w,
+                                   rct5,
+                                   color_info.pix_col);
+                end; {$endregion}
+
+              {Image background-------} {$region -fold}
               SetColorInfo(item_col_arr[1],color_info);
               PPFloodFill (oc_bmp_ptr0,
                            oc_w,
                            rct2,
                            color_info.pix_col); {$endregion}
 
-              {Image icon drawing-} {$region -fold}
+              {Image icon drawing-----} {$region -fold}
               fast_image_data_ptr0:=@fast_image_data;
 
               {Set sprites background params:scrollbox canvas(surface)}
@@ -1074,13 +1122,13 @@ begin
                        mc_h,
                        mc_rct); {$endregion}
 
-              {Image background FX} {$region -fold}
+              {Image background FX----} {$region -fold}
               if fx_draw then
                 if (item_fx_arr<>Nil) then
                   if (i<Length(item_fx_arr)) then
                     if (rct2.width >0) and
                        (rct2.height>0) then
-                      ImageBackgroundFX; {$endregion}
+                      ImgBackgroundFX; {$endregion}
 
               Inc(x0,item_rct.width+mrg_rct.{left}right);
             end;
@@ -1131,7 +1179,7 @@ begin
             PPHighlight{Limit}(oc_bmp_ptr0,
                                oc_w,
                                rct2,
-                               20); {$endregion}
+                               img_icon_fx_focused_pow); {$endregion}
 
           {Image icon bounding rectangle---------} {$region -fold}
           SetColorInfo(item_col_arr[2],color_info);
@@ -1168,21 +1216,23 @@ begin
               end; {$endregion}
 
           {Image icon label FX: focused----------} {$region -fold}
-          if (item_focused_ind=2*i+1) then
-            begin
-              SetColorInfo(item_col_arr[3],color_info);
-              RectangleL  (rct4.left,
-                           rct4.top,
-                           rct4.right,
-                           rct4.bottom,
-                           oc_bmp_ptr0,
-                           oc_w,
-                           rct_clp,
-                           color_info.pix_col);
-             {PPInverse(oc_bmp_ptr0,
-                        oc_w,
-                        rct3);}
-            end; {$endregion}
+          if img_label_focused_draw then
+            if (item_focused_ind=2*i+1) then
+              begin
+                SetColorInfo(item_col_arr[3],color_info);
+                RectangleL  (rct4.left,
+                             rct4.top,
+                             rct4.right,
+                             rct4.bottom,
+                             oc_bmp_ptr0,
+                             oc_w,
+                             rct_clp,
+                             color_info.pix_col);
+              end;
+          if is_selected_arr[i] then
+            PPInverse(oc_bmp_ptr0,
+                      oc_w,
+                      rct3); {$endregion}
 
           Inc(x0,item_rct.width+mrg_rct.{left}right);
         end; {$endregion} {$endregion}
@@ -1255,26 +1305,26 @@ begin
     with txt_label_prop do
       begin
         SetTxtPropDefault1;
-        rct5:=Rect(rct0.left +10,
+        rct7:=Rect(rct0.left +10,
                    rct0.top,
                    rct0.right-10,
                    rct0.bottom);
         DrawText(oc_bmp_ptr_^.Canvas.Handle,
                  PChar (txt_content),
                  Length(txt_content),
-                 rct5,
+                 rct7,
                  DT_WORDBREAK or DT_CALCRECT);
-        text_height_:=  rct5.bottom-rct5.top;
+        text_height_:=  rct7.bottom-rct7.top;
         offset      :=((rct0.bottom-rct0.top)-text_height_)>>1;
-        rct5        :=Rect(rct0.left +10,
+        rct7        :=Rect(rct0.left +10,
                            rct0.top,
                            rct0.right-10,
                            rct0.bottom);
-        Inc(rct5.top,offset);
+        Inc(rct7.top,offset);
         rct_mrg0    :=PtRct( 0,0,rct0    .width   ,rct0.height );
         rct_mrg1    :=PtRct(10,0,rct_mrg0.width-10,text_height_);
         Text(0,
-             rct5.top,
+             rct7.top,
              oc_bmp_ptr0,
              oc_w,
              @rct_clp,
@@ -1294,7 +1344,8 @@ begin
   //exec_timer.Stop;
   //exec_time0+=Trunc(exec_timer.Delay*1000);
 
-  {ScrollBox bounding rectangle-------} {$region -fold}
+  {ScrollBox bounding rectangle selection grid} {$region -fold}
+
   // Bounding rectangle selection grid:
   case sel_grid_type of
     0:
@@ -1416,6 +1467,9 @@ end; {$endregion}
 procedure   TUIImgScrollBox.GetItemSelectedInd  (      x,y        :integer);                                                inline; {$region -fold}
 var
   item_focused_ind_max: TColor;
+  //s: string='';
+label
+  l0;
 begin
   case sel_grid_type of
     0:
@@ -1447,8 +1501,40 @@ begin
     end
   else
         scr_bar_h.item_selected_ind:=      item_focused_ind_max;
+  if (items_cnt<>0) then
+    if (item_focused_ind<=2*(items_cnt-1)+1) then
+      begin
+        if (items_sel_cnt<items_sel_cnt_max) then
+          begin
+            l0:
+               is_selected_arr[item_focused_ind>>1]:=not
+               is_selected_arr[item_focused_ind>>1];
+            if is_selected_arr[item_focused_ind>>1] then
+              Inc(items_sel_cnt)
+            else
+            if   (items_sel_cnt<>0) then
+              Dec(items_sel_cnt);
+            //s:='brunch0:'+IntToStr(Random(1000));
+          end
+        else
+          begin
+            if (is_selected_arr[item_focused_ind>>1]) then
+              begin
+                is_selected_arr[item_focused_ind>>1]:=False;
+                if   (items_sel_cnt<>0) then
+                  Dec(items_sel_cnt);
+              end
+            else
+              begin
+                FillByte(is_selected_arr[0],Length(is_selected_arr),0);
+                items_sel_cnt:=0;
+                goto l0;
+              end;
+          end;
+        //F_MainForm.M_Log.Lines.Text:=s+#13+'items_sel_cnt'+IntToStr(items_sel_cnt);
+      end;
 end; {$endregion}
-procedure   TUIImgScrollBox.SetItemsUnselected;                                                                             inline; {$region -fold}
+procedure   TUIImgScrollBox.SetItemsUnfocused;                                                                              inline; {$region -fold}
 var
   item_focused_ind_max: TColor;
 begin
@@ -1466,6 +1552,15 @@ begin
   item_focused_ind_max       :=MAX_TYPE_VAL[sel_grid_type];
   scr_bar_v.item_selected_ind:=item_focused_ind_max;
   scr_bar_h.item_selected_ind:=item_focused_ind_max;
+end; {$endregion}
+procedure   TUIImgScrollBox.SetItemsUnselected;                                                                             inline; {$region -fold}
+begin
+  if (items_cnt<>0) then
+    if (item_focused_ind=MAX_TYPE_VAL[sel_grid_type]) then
+      begin
+        FillByte(is_selected_arr[0],Length(is_selected_arr),0);
+        items_sel_cnt:=0;
+      end;
 end; {$endregion}
 procedure   TUIImgScrollBox.SetPosShiftSize     (var   pvt        :TPoint; var dir:TMovingDirection; const b:boolean=True);         {$region -fold}
 var
@@ -1900,7 +1995,7 @@ begin
          (scr_bar_h.GetSelectedItemInd<>5) then
         begin
           screen_cursor_ptr^:=0;
-          SetItemsUnselected;
+          SetItemsUnfocused;
         end;
     end;
   with scr_bar_v do
@@ -1931,13 +2026,14 @@ procedure   TUIImgScrollBox.OnMouseDown         (x,y:integer);                  
 begin
   GetItemFocusedInd (x,y);
   GetItemSelectedInd(x,y);
+  SetItemsUnselected;
   scr_bar_v.set_default_pos:=False;
   scr_bar_h.set_default_pos:=False;
 end; {$endregion}
 procedure   TUIImgScrollBox.OnMouseUp           (x,y:integer);                                                                      {$region -fold}
 begin
  GetItemFocusedInd(x,y);
- SetItemsUnselected;
+ SetItemsUnfocused;
 end; {$endregion}
 procedure   TUIImgScrollBox.OnMouseWheel        (shift_:TShiftState; mousepos_:TPoint; var dir:TMovingDirection);                   {$region -fold}
 begin

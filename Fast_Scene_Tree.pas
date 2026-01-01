@@ -812,7 +812,7 @@ var
 
 implementation
 
-uses //
+uses
 
   Fast_Main;
 

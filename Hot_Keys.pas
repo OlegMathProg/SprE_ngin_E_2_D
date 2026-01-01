@@ -7,7 +7,7 @@ unit Hot_Keys;
 
 interface
 
-uses ///
+uses
 
   Forms, Controls, Graphics, Dialogs, ComCtrls, ExtCtrls, Classes, SysUtils,
   LCLType;
@@ -16,7 +16,7 @@ uses ///
 
 type
 
-  { TF_Hot_Keys }
+  {TF_Hot_Keys}
   TF_Hot_Keys=class(TForm) {$region -fold}
     LV_Hot_Keys: TListView;
     procedure FormCreate           (sender:TObject);

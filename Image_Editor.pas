@@ -15,7 +15,7 @@ uses
 
 type
 
-  { TF_Image_Editor }
+  {TF_Image_Editor}
   TF_Image_Editor=class(TForm) {$region -fold}
     procedure FormCreate(sender:TObject);
     procedure FormShow  (sender:TObject);
@@ -41,7 +41,7 @@ uses
 
 {$R *.lfm}
 
-{ TF_Image_Editor }
+{TF_Image_Editor}
 
 procedure TF_Image_Editor.FormCreate(sender:TObject); {$region -fold}
 begin

@@ -46,7 +46,7 @@ object F_Hot_Keys: TF_Hot_Keys
         Caption = 'Command'
         MaxWidth = 180
         MinWidth = 100
-        Width = 193
+        Width = 180
       end    
       item
         Caption = 'Key1'

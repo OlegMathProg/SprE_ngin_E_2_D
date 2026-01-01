@@ -8,7 +8,7 @@ unit Fast_Main;
 
 interface
 
-uses //
+uses
 
   {ZLib,}
   Graphics, Classes, SysUtils, Forms, ComCtrls, GraphType, LResources, Dialogs,
@@ -5032,9 +5032,12 @@ begin
     end;
   with TUIImgScrollBox(ui_obj_mgr.ui_obj_arr[0]),sprite_arr[library_images_inds_arr[Length(library_images_inds_arr)-1]],fast_image_data do
     begin
+      SetLength(items_sel_inds_arr  ,Length(items_sel_inds_arr  )+1);
+      SetLength(is_selected_arr     ,Length(items_sel_inds_arr  )  );
       SetLength(sprite_sheet_mrg_arr,Length(sprite_sheet_mrg_arr)+1);
                 sprite_sheet_mrg_arr[Length(sprite_sheet_mrg_arr)-1].x:=0;//(bmp_ftimg_height_origin div 26)*02;
                 sprite_sheet_mrg_arr[Length(sprite_sheet_mrg_arr)-1].y:=0;//(bmp_ftimg_height_origin div 26)*23;
+      items_sel_cnt_max:=            Length(items_sel_inds_arr  );
     end;
 end; {$endregion}
 {$endregion}
@@ -23698,9 +23701,10 @@ begin
   ui_obj_mgr.AddUIObj(uiImgScrollBox);
   with TUIImgScrollBox(ui_obj_mgr.ui_obj_arr[1]) do
     begin
-      fx_draw               :=True;
-    //line_break            :=False;
     //scr_bar_v.scr_bar_draw:=False;
+      img_label_focused_draw:=False;
+    //line_break            :=False;
+      fx_draw               :=True;
     end;
   PProcDefaultIconCreate;
   PProcInit;
@@ -23741,6 +23745,8 @@ begin
   ppr_images_label_arr1[21]:=' Gradient: Gamma';
   with TUIImgScrollBox(ui_obj_mgr.ui_obj_arr[1]) do
     begin
+      SetLength(items_sel_inds_arr  ,Length(ppr_images_inds_arr));
+      SetLength(is_selected_arr     ,Length(ppr_images_inds_arr));
       SetLength(sprite_sheet_mrg_arr,Length(ppr_images_inds_arr));
       SetLength(item_fx_arr         ,Length(ppr_images_inds_arr));
       for i:=0 to Length(item_fx_arr)-1 do

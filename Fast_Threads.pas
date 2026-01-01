@@ -8,7 +8,7 @@ implementations of multi-threaded variants of some functions from other modules)
 
 interface
 
-uses  ///
+uses
 
   Classes, SysUtils, MTProcs, PasMP, Fast_Graphics, Fast_UI;
 
