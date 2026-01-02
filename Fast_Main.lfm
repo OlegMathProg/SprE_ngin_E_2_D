@@ -8558,9 +8558,9 @@ object F_MainForm: TF_MainForm
           AnchorSideRight.Side = asrBottom
           AnchorSideBottom.Control = TS_Draw
           AnchorSideBottom.Side = asrBottom
-          Left = 12
+          Left = -80
           Height = 264
-          Top = 89
+          Top = 70
           Width = 790
           HorzScrollBar.Increment = 77
           HorzScrollBar.Page = 776
@@ -9766,9 +9766,9 @@ object F_MainForm: TF_MainForm
           AnchorSideRight.Side = asrBottom
           AnchorSideBottom.Control = TS_Draw
           AnchorSideBottom.Side = asrBottom
-          Left = 534
+          Left = 552
           Height = 110
-          Top = 89
+          Top = 200
           Width = 530
           HorzScrollBar.Page = 83
           HorzScrollBar.Smooth = True
@@ -9832,9 +9832,9 @@ object F_MainForm: TF_MainForm
           AnchorSideRight.Side = asrBottom
           AnchorSideBottom.Control = TS_Draw
           AnchorSideBottom.Side = asrBottom
-          Left = 534
+          Left = 400
           Height = 110
-          Top = 127
+          Top = 224
           Width = 530
           HorzScrollBar.Page = 83
           HorzScrollBar.Smooth = True
@@ -10100,9 +10100,9 @@ object F_MainForm: TF_MainForm
           AnchorSideRight.Side = asrBottom
           AnchorSideBottom.Control = TS_Draw
           AnchorSideBottom.Side = asrBottom
-          Left = 512
+          Left = 8
           Height = 152
-          Top = 56
+          Top = 278
           Width = 760
           HorzScrollBar.Increment = 46
           HorzScrollBar.Page = 464
@@ -10879,9 +10879,9 @@ object F_MainForm: TF_MainForm
           AnchorSideRight.Side = asrBottom
           AnchorSideBottom.Control = TS_Draw
           AnchorSideBottom.Side = asrBottom
-          Left = -88
+          Left = 136
           Height = 247
-          Top = 48
+          Top = 56
           Width = 784
           HorzScrollBar.Increment = 53
           HorzScrollBar.Page = 532
@@ -10972,7 +10972,7 @@ object F_MainForm: TF_MainForm
                 Spacing = 0
                 TabOrder = 0
               end
-              object L_Object_Name1: TLabel
+              object L_Post_Processing_Name: TLabel
                 AnchorSideLeft.Control = BB_Post_Processing_Generate
                 AnchorSideLeft.Side = asrBottom
                 AnchorSideRight.Control = P_Post_Processing_Header
@@ -11115,16 +11115,16 @@ object F_MainForm: TF_MainForm
             AnchorSideRight.Side = asrBottom
             AnchorSideBottom.Side = asrBottom
             Left = 2
-            Height = 162
+            Height = 138
             Top = 28
             Width = 192
             BevelColor = 7561809
             BevelOuter = bvLowered
             BevelWidth = 2
-            ClientHeight = 162
+            ClientHeight = 138
             ClientWidth = 192
             Color = 10063735
-            Constraints.MaxHeight = 162
+            Constraints.MaxHeight = 138
             Constraints.MinHeight = 2
             Font.CharSet = ANSI_CHARSET
             Font.Color = 7107914
@@ -11139,6 +11139,7 @@ object F_MainForm: TF_MainForm
             TabOrder = 2
             OnMouseEnter = P_Post_Processing_FX_Settings_SettingsMouseEnter
             OnMouseLeave = P_Post_Processing_FX_Settings_SettingsMouseLeave
+            OnPaint = P_Post_Processing_FX_Settings_SettingsPaint
             object L_Post_Processing_FX_Settings_Style: TLabel
               Left = 10
               Height = 15
@@ -11177,22 +11178,23 @@ object F_MainForm: TF_MainForm
               Font.Name = 'Gisha'
               Font.Style = [fsBold]
               ItemHeight = 15
+              OnChange = CB_Post_Processing_FX_Settings_StyleChange
               OnMouseEnter = P_Post_Processing_FX_Settings_SettingsMouseEnter
               OnMouseLeave = P_Post_Processing_FX_Settings_SettingsMouseLeave
-              OnSelect = CB_Spline_Edges_Bounds_StyleSelect
+              OnSelect = CB_Post_Processing_FX_Settings_StyleSelect
               ParentBidiMode = False
               ParentFont = False
               ParentShowHint = False
               Style = csDropDownList
               TabOrder = 0
             end
-            object L_Post_Processing_FX_Settings_Color1: TLabel
-              Left = 10
+            object L_Post_Processing_FX_Settings_Color0: TLabel
+              Left = 9
               Height = 15
-              Top = 58
+              Top = 33
               Width = 43
               BorderSpacing.Left = 8
-              Caption = 'Color 1:'
+              Caption = 'Color 0:'
               Font.CharSet = ANSI_CHARSET
               Font.Color = clBlack
               Font.Height = -12
@@ -11206,19 +11208,19 @@ object F_MainForm: TF_MainForm
               OnMouseEnter = P_Post_Processing_FX_Settings_SettingsMouseEnter
               OnMouseLeave = P_Post_Processing_FX_Settings_SettingsMouseLeave
             end
-            object SB_Post_Processing_FX_Settings_Color1: TSpeedButton
-              AnchorSideLeft.Control = L_Post_Processing_FX_Settings_Color1
+            object SB_Post_Processing_FX_Settings_Color0: TSpeedButton
+              AnchorSideLeft.Control = L_Post_Processing_FX_Settings_Color0
               AnchorSideLeft.Side = asrBottom
               Cursor = crHandPoint
-              Left = 80
+              Left = 79
               Height = 16
-              Top = 58
+              Top = 33
               Width = 16
               AllowAllUp = True
               Anchors = [akTop]
               BorderSpacing.Left = 4
               BorderSpacing.Right = 13
-              Color = 14244794
+              Color = clRed
               Flat = True
               Font.CharSet = ANSI_CHARSET
               Font.Color = 7107914
@@ -11228,22 +11230,22 @@ object F_MainForm: TF_MainForm
               Font.Quality = fqDraft
               Font.Style = [fsBold]
               Transparent = False
-              OnClick = SB_Spline_Edges_Bounds_ColorClick
+              OnClick = SB_Post_Processing_FX_Settings_Color0Click
               OnMouseEnter = P_Post_Processing_FX_Settings_SettingsMouseEnter
               OnMouseLeave = P_Post_Processing_FX_Settings_SettingsMouseLeave
               ShowHint = True
               ParentFont = False
               ParentShowHint = False
             end
-            object SB_Post_Processing_FX_Settings_Color_Random1: TSpeedButton
-              AnchorSideLeft.Control = SB_Post_Processing_FX_Settings_Color1
-              AnchorSideTop.Control = SB_Post_Processing_FX_Settings_Color1
+            object SB_Post_Processing_FX_Settings_Color_Random0: TSpeedButton
+              AnchorSideLeft.Control = SB_Post_Processing_FX_Settings_Color0
+              AnchorSideTop.Control = SB_Post_Processing_FX_Settings_Color0
               AnchorSideTop.Side = asrCenter
               Cursor = crHandPoint
-              Left = 100
+              Left = 99
               Height = 20
               Hint = 'Set random color'
-              Top = 56
+              Top = 31
               Width = 24
               AllowAllUp = True
               Anchors = [akTop]
@@ -11267,15 +11269,15 @@ object F_MainForm: TF_MainForm
               ParentFont = False
               ParentShowHint = False
             end
-            object SB_Post_Processing_FX_Settings_Color_FallOff1: TSpeedButton
-              AnchorSideLeft.Control = SB_Post_Processing_FX_Settings_Color_Random1
+            object SB_Post_Processing_FX_Settings_Color_FallOff0: TSpeedButton
+              AnchorSideLeft.Control = SB_Post_Processing_FX_Settings_Color_Random0
               AnchorSideLeft.Side = asrBottom
-              AnchorSideTop.Control = SB_Post_Processing_FX_Settings_Color_Random1
+              AnchorSideTop.Control = SB_Post_Processing_FX_Settings_Color_Random0
               AnchorSideTop.Side = asrCenter
               Cursor = crHandPoint
-              Left = 128
+              Left = 127
               Height = 20
-              Top = 56
+              Top = 31
               Width = 54
               AllowAllUp = True
               Anchors = [akTop]
@@ -11299,67 +11301,13 @@ object F_MainForm: TF_MainForm
               ParentFont = False
               ParentShowHint = False
             end
-            object L_Post_Processing_FX_Settings_Effect_Strength: TLabel
-              Left = 10
+            object L_Post_Processing_FX_Settings_Color1: TLabel
+              Left = 9
               Height = 15
-              Top = 33
-              Width = 88
-              BorderSpacing.Left = 8
-              Caption = 'Effect Strength:'
-              Font.CharSet = ANSI_CHARSET
-              Font.Color = clBlack
-              Font.Height = -12
-              Font.Name = 'AR JULIAN'
-              Font.Quality = fqDraft
-              Font.Style = [fsBold]
-              Layout = tlBottom
-              ParentBidiMode = False
-              ParentFont = False
-              ParentShowHint = False
-              OnMouseEnter = P_Post_Processing_FX_Settings_SettingsMouseEnter
-              OnMouseLeave = P_Post_Processing_FX_Settings_SettingsMouseLeave
-            end
-            object SE_Post_Processing_FX_Settings_Effect_Strength: TSpinEdit
-              AnchorSideLeft.Control = L_Post_Processing_FX_Settings_Effect_Strength
-              AnchorSideLeft.Side = asrBottom
-              Left = 138
-              Height = 20
-              Top = 31
-              Width = 44
-              Anchors = [akTop]
-              AutoSelect = False
-              AutoSize = False
-              BorderSpacing.Left = 4
-              Color = 15791340
-              Constraints.MaxHeight = 20
-              Constraints.MinHeight = 20
-              Enabled = False
-              Font.CharSet = RUSSIAN_CHARSET
-              Font.Color = 5512455
-              Font.Height = -11
-              Font.Name = 'Euphemia'
-              Font.Pitch = fpVariable
-              Font.Quality = fqDraft
-              Font.Style = [fsBold]
-              MaxValue = 255
-              OnChange = SE_Spline_Edges_Bounds_Effect_StrengthChange
-              OnEnter = SE_Spline_Pts_FreqEnter
-              OnExit = SE_Spline_Pts_FreqExit
-              OnMouseDown = SE_Spline_Pts_FreqMouseDown
-              OnMouseEnter = P_Post_Processing_FX_Settings_SettingsMouseEnter
-              OnMouseLeave = P_Post_Processing_FX_Settings_SettingsMouseLeave
-              ParentFont = False
-              ParentShowHint = False
-              TabOrder = 1
-              Value = 255
-            end
-            object L_Post_Processing_FX_Settings_Color2: TLabel
-              Left = 10
-              Height = 15
-              Top = 83
+              Top = 58
               Width = 43
               BorderSpacing.Left = 8
-              Caption = 'Color 2:'
+              Caption = 'Color 1:'
               Font.CharSet = ANSI_CHARSET
               Font.Color = clBlack
               Font.Height = -12
@@ -11373,19 +11321,19 @@ object F_MainForm: TF_MainForm
               OnMouseEnter = P_Post_Processing_FX_Settings_SettingsMouseEnter
               OnMouseLeave = P_Post_Processing_FX_Settings_SettingsMouseLeave
             end
-            object SB_Post_Processing_FX_Settings_Color2: TSpeedButton
-              AnchorSideLeft.Control = L_Post_Processing_FX_Settings_Color2
+            object SB_Post_Processing_FX_Settings_Color1: TSpeedButton
+              AnchorSideLeft.Control = L_Post_Processing_FX_Settings_Color1
               AnchorSideLeft.Side = asrBottom
               Cursor = crHandPoint
-              Left = 80
+              Left = 79
               Height = 16
-              Top = 83
+              Top = 58
               Width = 16
               AllowAllUp = True
               Anchors = [akTop]
               BorderSpacing.Left = 4
               BorderSpacing.Right = 13
-              Color = 14244794
+              Color = clGreen
               Flat = True
               Font.CharSet = ANSI_CHARSET
               Font.Color = 7107914
@@ -11395,22 +11343,22 @@ object F_MainForm: TF_MainForm
               Font.Quality = fqDraft
               Font.Style = [fsBold]
               Transparent = False
-              OnClick = SB_Spline_Edges_Bounds_ColorClick
+              OnClick = SB_Post_Processing_FX_Settings_Color1Click
               OnMouseEnter = P_Post_Processing_FX_Settings_SettingsMouseEnter
               OnMouseLeave = P_Post_Processing_FX_Settings_SettingsMouseLeave
               ShowHint = True
               ParentFont = False
               ParentShowHint = False
             end
-            object SB_Post_Processing_FX_Settings_Color_Random2: TSpeedButton
-              AnchorSideLeft.Control = SB_Post_Processing_FX_Settings_Color2
-              AnchorSideTop.Control = SB_Post_Processing_FX_Settings_Color2
+            object SB_Post_Processing_FX_Settings_Color_Random1: TSpeedButton
+              AnchorSideLeft.Control = SB_Post_Processing_FX_Settings_Color1
+              AnchorSideTop.Control = SB_Post_Processing_FX_Settings_Color1
               AnchorSideTop.Side = asrCenter
               Cursor = crHandPoint
-              Left = 100
+              Left = 99
               Height = 20
               Hint = 'Set random color'
-              Top = 81
+              Top = 56
               Width = 24
               AllowAllUp = True
               Anchors = [akTop]
@@ -11434,15 +11382,15 @@ object F_MainForm: TF_MainForm
               ParentFont = False
               ParentShowHint = False
             end
-            object SB_Post_Processing_FX_Settings_Color_FallOff2: TSpeedButton
-              AnchorSideLeft.Control = SB_Post_Processing_FX_Settings_Color_Random2
+            object SB_Post_Processing_FX_Settings_Color_FallOff1: TSpeedButton
+              AnchorSideLeft.Control = SB_Post_Processing_FX_Settings_Color_Random1
               AnchorSideLeft.Side = asrBottom
-              AnchorSideTop.Control = SB_Post_Processing_FX_Settings_Color_Random2
+              AnchorSideTop.Control = SB_Post_Processing_FX_Settings_Color_Random1
               AnchorSideTop.Side = asrCenter
               Cursor = crHandPoint
-              Left = 128
+              Left = 127
               Height = 20
-              Top = 81
+              Top = 56
               Width = 54
               AllowAllUp = True
               Anchors = [akTop]
@@ -11466,13 +11414,13 @@ object F_MainForm: TF_MainForm
               ParentFont = False
               ParentShowHint = False
             end
-            object L_Post_Processing_FX_Settings_Alpha1: TLabel
-              Left = 10
+            object L_Post_Processing_FX_Settings_Alpha0: TLabel
+              Left = 9
               Height = 15
-              Top = 108
+              Top = 83
               Width = 45
               BorderSpacing.Left = 8
-              Caption = 'Alpha 1:'
+              Caption = 'Alpha 0:'
               Font.CharSet = ANSI_CHARSET
               Font.Color = clBlack
               Font.Height = -12
@@ -11486,19 +11434,19 @@ object F_MainForm: TF_MainForm
               OnMouseEnter = P_Post_Processing_FX_Settings_SettingsMouseEnter
               OnMouseLeave = P_Post_Processing_FX_Settings_SettingsMouseLeave
             end
-            object SB_Post_Processing_FX_Settings_Alpha1: TSpeedButton
-              AnchorSideLeft.Control = L_Post_Processing_FX_Settings_Alpha1
+            object SB_Post_Processing_FX_Settings_Alpha0: TSpeedButton
+              AnchorSideLeft.Control = L_Post_Processing_FX_Settings_Alpha0
               AnchorSideLeft.Side = asrBottom
               Cursor = crHandPoint
-              Left = 80
+              Left = 79
               Height = 16
-              Top = 108
+              Top = 83
               Width = 16
               AllowAllUp = True
               Anchors = [akTop]
               BorderSpacing.Left = 4
               BorderSpacing.Right = 13
-              Color = 14244794
+              Color = clWhite
               Flat = True
               Font.CharSet = ANSI_CHARSET
               Font.Color = 7107914
@@ -11508,22 +11456,22 @@ object F_MainForm: TF_MainForm
               Font.Quality = fqDraft
               Font.Style = [fsBold]
               Transparent = False
-              OnClick = SB_Spline_Edges_Bounds_ColorClick
+              OnClick = SB_Post_Processing_FX_Settings_Alpha0Click
               OnMouseEnter = P_Post_Processing_FX_Settings_SettingsMouseEnter
               OnMouseLeave = P_Post_Processing_FX_Settings_SettingsMouseLeave
               ShowHint = True
               ParentFont = False
               ParentShowHint = False
             end
-            object SB_Post_Processing_FX_Settings_Alpha_Random1: TSpeedButton
-              AnchorSideLeft.Control = SB_Post_Processing_FX_Settings_Alpha1
-              AnchorSideTop.Control = SB_Post_Processing_FX_Settings_Alpha1
+            object SB_Post_Processing_FX_Settings_Alpha_Random0: TSpeedButton
+              AnchorSideLeft.Control = SB_Post_Processing_FX_Settings_Alpha0
+              AnchorSideTop.Control = SB_Post_Processing_FX_Settings_Alpha0
               AnchorSideTop.Side = asrCenter
               Cursor = crHandPoint
-              Left = 100
+              Left = 99
               Height = 20
               Hint = 'Set random color'
-              Top = 106
+              Top = 81
               Width = 24
               AllowAllUp = True
               Anchors = [akTop]
@@ -11547,15 +11495,15 @@ object F_MainForm: TF_MainForm
               ParentFont = False
               ParentShowHint = False
             end
-            object SB_Post_Processing_FX_Settings_Alpha_FallOff1: TSpeedButton
-              AnchorSideLeft.Control = SB_Post_Processing_FX_Settings_Alpha_Random1
+            object SB_Post_Processing_FX_Settings_Alpha_FallOff0: TSpeedButton
+              AnchorSideLeft.Control = SB_Post_Processing_FX_Settings_Alpha_Random0
               AnchorSideLeft.Side = asrBottom
-              AnchorSideTop.Control = SB_Post_Processing_FX_Settings_Alpha_Random1
+              AnchorSideTop.Control = SB_Post_Processing_FX_Settings_Alpha_Random0
               AnchorSideTop.Side = asrCenter
               Cursor = crHandPoint
-              Left = 128
+              Left = 127
               Height = 20
-              Top = 106
+              Top = 81
               Width = 54
               AllowAllUp = True
               Anchors = [akTop]
@@ -11579,13 +11527,13 @@ object F_MainForm: TF_MainForm
               ParentFont = False
               ParentShowHint = False
             end
-            object L_Post_Processing_FX_Settings_Alpha2: TLabel
-              Left = 10
+            object L_Post_Processing_FX_Settings_Alpha1: TLabel
+              Left = 9
               Height = 15
-              Top = 133
+              Top = 108
               Width = 45
               BorderSpacing.Left = 8
-              Caption = 'Alpha 2:'
+              Caption = 'Alpha 1:'
               Font.CharSet = ANSI_CHARSET
               Font.Color = clBlack
               Font.Height = -12
@@ -11599,19 +11547,19 @@ object F_MainForm: TF_MainForm
               OnMouseEnter = P_Post_Processing_FX_Settings_SettingsMouseEnter
               OnMouseLeave = P_Post_Processing_FX_Settings_SettingsMouseLeave
             end
-            object SB_Post_Processing_FX_Settings_Alpha2: TSpeedButton
-              AnchorSideLeft.Control = L_Post_Processing_FX_Settings_Alpha2
+            object SB_Post_Processing_FX_Settings_Alpha1: TSpeedButton
+              AnchorSideLeft.Control = L_Post_Processing_FX_Settings_Alpha1
               AnchorSideLeft.Side = asrBottom
               Cursor = crHandPoint
-              Left = 80
+              Left = 79
               Height = 16
-              Top = 133
+              Top = 108
               Width = 16
               AllowAllUp = True
               Anchors = [akTop]
               BorderSpacing.Left = 4
               BorderSpacing.Right = 13
-              Color = 14244794
+              Color = clBlack
               Flat = True
               Font.CharSet = ANSI_CHARSET
               Font.Color = 7107914
@@ -11621,22 +11569,22 @@ object F_MainForm: TF_MainForm
               Font.Quality = fqDraft
               Font.Style = [fsBold]
               Transparent = False
-              OnClick = SB_Spline_Edges_Bounds_ColorClick
+              OnClick = SB_Post_Processing_FX_Settings_Alpha1Click
               OnMouseEnter = P_Post_Processing_FX_Settings_SettingsMouseEnter
               OnMouseLeave = P_Post_Processing_FX_Settings_SettingsMouseLeave
               ShowHint = True
               ParentFont = False
               ParentShowHint = False
             end
-            object SB_Post_Processing_FX_Settings_Alpha_Random2: TSpeedButton
-              AnchorSideLeft.Control = SB_Post_Processing_FX_Settings_Alpha2
-              AnchorSideTop.Control = SB_Post_Processing_FX_Settings_Alpha2
+            object SB_Post_Processing_FX_Settings_Alpha_Random1: TSpeedButton
+              AnchorSideLeft.Control = SB_Post_Processing_FX_Settings_Alpha1
+              AnchorSideTop.Control = SB_Post_Processing_FX_Settings_Alpha1
               AnchorSideTop.Side = asrCenter
               Cursor = crHandPoint
-              Left = 100
+              Left = 99
               Height = 20
               Hint = 'Set random color'
-              Top = 131
+              Top = 106
               Width = 24
               AllowAllUp = True
               Anchors = [akTop]
@@ -11660,15 +11608,15 @@ object F_MainForm: TF_MainForm
               ParentFont = False
               ParentShowHint = False
             end
-            object SB_Post_Processing_FX_Settings_Alpha_FallOff2: TSpeedButton
-              AnchorSideLeft.Control = SB_Post_Processing_FX_Settings_Alpha_Random2
+            object SB_Post_Processing_FX_Settings_Alpha_FallOff1: TSpeedButton
+              AnchorSideLeft.Control = SB_Post_Processing_FX_Settings_Alpha_Random1
               AnchorSideLeft.Side = asrBottom
-              AnchorSideTop.Control = SB_Post_Processing_FX_Settings_Alpha_Random2
+              AnchorSideTop.Control = SB_Post_Processing_FX_Settings_Alpha_Random1
               AnchorSideTop.Side = asrCenter
               Cursor = crHandPoint
-              Left = 128
+              Left = 127
               Height = 20
-              Top = 131
+              Top = 106
               Width = 54
               AllowAllUp = True
               Anchors = [akTop]
@@ -13940,7 +13888,7 @@ object F_MainForm: TF_MainForm
     Left = 288
     Height = 40
     Top = 8
-    Width = 176
+    Width = 312
     BorderSpacing.Left = 5
     BorderStyle = bsNone
     Color = 3678503
@@ -14923,6 +14871,26 @@ object F_MainForm: TF_MainForm
     TabOrder = 39
     Value = 10
     Visible = False
+  end
+  object L_Post_Processing_FX_Settings_Effect_Strength: TLabel
+    Left = 10
+    Height = 15
+    Top = 33
+    Width = 88
+    BorderSpacing.Left = 8
+    Caption = 'Effect Strength:'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clBlack
+    Font.Height = -12
+    Font.Name = 'AR JULIAN'
+    Font.Quality = fqDraft
+    Font.Style = [fsBold]
+    Layout = tlBottom
+    ParentBidiMode = False
+    ParentFont = False
+    ParentShowHint = False
+    OnMouseEnter = P_Post_Processing_FX_Settings_SettingsMouseEnter
+    OnMouseLeave = P_Post_Processing_FX_Settings_SettingsMouseLeave
   end
   object OpenDialog1: TOpenDialog
     DefaultExt = '.obj'
@@ -15957,6 +15925,11 @@ object F_MainForm: TF_MainForm
     end
     object Separator2: TMenuItem
       Caption = '-'
+    end
+    object MI_Switch_To_Tools_Page_On_Select_Object: TMenuItem
+      Caption = 'Switch To Tools Page On Select Object'
+      Checked = True
+      Enabled = False
     end
     object MI_Allow_MultiRename: TMenuItem
       AutoCheck = True

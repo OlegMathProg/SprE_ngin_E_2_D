@@ -146,7 +146,6 @@ type
   {TF_MainForm--------}
   TF_MainForm    =class(TForm) {$region -fold}
     GIFViewer1                                       : TGIFViewer;
-    L_Object_Name1: TLabel;
     T_Editor_Time                                    : TTimer;
     T_Game_Loop                                      : TTimer;
     TrayIcon1                                        : TTrayIcon;
@@ -334,12 +333,12 @@ type
     L_Object_Properties_Parallax_ShiftY              : TLabel;
     L_Object_Tags_Zoom_Hint                          : TLabel;
     L_Post_Processing_FX_Settings_Style              : TLabel;
-    L_Post_Processing_FX_Settings_Effect_Strength    : TLabel;
+    L_Post_Processing_FX_Settings_Color0             : TLabel;
     L_Post_Processing_FX_Settings_Color1             : TLabel;
-    L_Post_Processing_FX_Settings_Color2             : TLabel;
+    L_Post_Processing_FX_Settings_Alpha0             : TLabel;
     L_Post_Processing_FX_Settings_Alpha1             : TLabel;
-    L_Post_Processing_FX_Settings_Alpha2             : TLabel;
     L_Post_Processing_List_Zoom_Hint                 : TLabel;
+    L_Post_Processing_Name                           : TLabel;
     L_RGrid_Color                                    : TLabel;
     L_SGrid_Color                                    : TLabel;
     L_Select_Items_Inner_Subgraph_Clip_Style         : TLabel;
@@ -427,7 +426,7 @@ type
     L_Tag_Properties                                 : TLabel;
     L_Text_Field                                     : TLabel;
     L_Label1                                         : TLabel;
-    M_Log                                       : TMemo;
+    M_Log                                            : TMemo;
     M_Text_Text_Field                                : TMemo;
     MI_Monochrome                                    : TMenuItem;
     MI_Additive                                      : TMenuItem;
@@ -459,6 +458,7 @@ type
     MI_Separator4                                    : TMenuItem;
     MI_Separator5                                    : TMenuItem;
     MI_Separator6                                    : TMenuItem;
+    MI_Switch_To_Tools_Page_On_Select_Object         : TMenuItem;
     MI_Allow_MultiRename                             : TMenuItem;
     MI_Reverse_Order                                 : TMenuItem;
     MI_Center_Camera_To_Selected_Object              : TMenuItem;
@@ -640,18 +640,18 @@ type
     SB_Select_Items_Selected_Points_Show             : TSpeedButton;
     SB_Add_Tilemap                                   : TSpeedButton;
     SB_Post_Processing                               : TSpeedButton;
+    SB_Post_Processing_FX_Settings_Color0            : TSpeedButton;
     SB_Post_Processing_FX_Settings_Color1            : TSpeedButton;
-    SB_Post_Processing_FX_Settings_Color2            : TSpeedButton;
+    SB_Post_Processing_FX_Settings_Alpha0            : TSpeedButton;
     SB_Post_Processing_FX_Settings_Alpha1            : TSpeedButton;
-    SB_Post_Processing_FX_Settings_Alpha2            : TSpeedButton;
+    SB_Post_Processing_FX_Settings_Color_Random0     : TSpeedButton;
     SB_Post_Processing_FX_Settings_Color_Random1     : TSpeedButton;
-    SB_Post_Processing_FX_Settings_Color_Random2     : TSpeedButton;
+    SB_Post_Processing_FX_Settings_Alpha_Random0     : TSpeedButton;
     SB_Post_Processing_FX_Settings_Alpha_Random1     : TSpeedButton;
-    SB_Post_Processing_FX_Settings_Alpha_Random2     : TSpeedButton;
+    SB_Post_Processing_FX_Settings_Color_FallOff0    : TSpeedButton;
     SB_Post_Processing_FX_Settings_Color_FallOff1    : TSpeedButton;
-    SB_Post_Processing_FX_Settings_Color_FallOff2    : TSpeedButton;
+    SB_Post_Processing_FX_Settings_Alpha_FallOff0    : TSpeedButton;
     SB_Post_Processing_FX_Settings_Alpha_FallOff1    : TSpeedButton;
-    SB_Post_Processing_FX_Settings_Alpha_FallOff2    : TSpeedButton;
     SB_Post_Processing_List_Zoom_Hint_Hide           : TSpeedButton;
     SB_Background                                    : TSpeedButton;
     SB_Background_Color                              : TSpeedButton;
@@ -723,7 +723,6 @@ type
     SE_Game_Settings_Refresh_Step                    : TSpinEdit;
     SE_Object_Properties_Parallax_ShiftX             : TSpinEdit;
     SE_Object_Properties_Parallax_ShiftY             : TSpinEdit;
-    SE_Post_Processing_FX_Settings_Effect_Strength   : TSpinEdit;
     SE_Spline_Bitmap_Height                          : TSpinEdit;
     SE_Spline_Bitmap_Width                           : TSpinEdit;
     SE_Spline_Cycloid_Loops_Count                    : TSpinEdit;
@@ -832,6 +831,8 @@ type
     procedure   SE_Game_Settings_Canvas_HeightEditingDone               (      sender               :TObject);
     procedure   SE_Game_Settings_Canvas_WidthChange                     (      sender               :TObject);
     procedure   SE_Game_Settings_Canvas_HeightChange                    (      sender               :TObject);
+    procedure   CB_Post_Processing_FX_Settings_StyleSelect              (      sender               :TObject);
+    procedure   CB_Post_Processing_FX_Settings_StyleChange              (      sender               :TObject);
     procedure   CB_Select_Items_Inner_Subgraph_Anti_AliasingChange      (      sender               :TObject);
     procedure   CB_Select_Items_Inner_Subgraph_Clip_StyleSelect         (      sender               :TObject);
     procedure   CB_Select_Items_Inner_Subgraph_Line_StyleSelect         (      sender               :TObject);
@@ -998,6 +999,10 @@ type
     procedure   SB_Content_Library_Images_Zoom_Hint_HideClick           (      sender               :TObject);
     procedure   SB_Object_Tags_Zoom_Hint_HideClick                      (      sender               :TObject);
     procedure   SB_Post_Processing_List_Zoom_Hint_HideClick             (      sender               :TObject);
+    procedure   SB_Post_Processing_FX_Settings_Color0Click              (      sender               :TObject);
+    procedure   SB_Post_Processing_FX_Settings_Color1Click              (      sender               :TObject);
+    procedure   SB_Post_Processing_FX_Settings_Alpha0Click              (      sender               :TObject);
+    procedure   SB_Post_Processing_FX_Settings_Alpha1Click              (      sender               :TObject);
     procedure   SB_TextMouseEnter                                       (      sender               :TObject);
     procedure   SB_TextMouseLeave                                       (      sender               :TObject);
     procedure   SB_BrushMouseEnter                                      (      sender               :TObject);
@@ -1127,6 +1132,7 @@ type
     procedure   P_Post_Processing_FX_Settings_HeaderMouseLeave          (      sender               :TObject);
     procedure   P_Post_Processing_FX_Settings_SettingsMouseEnter        (      sender               :TObject);
     procedure   P_Post_Processing_FX_Settings_SettingsMouseLeave        (      sender               :TObject);
+    procedure   P_Post_Processing_FX_Settings_SettingsPaint             (      sender               :TObject);
     procedure   P_Post_Processing_HeaderMouseEnter                      (      sender               :TObject);
     procedure   P_Post_Processing_HeaderMouseLeave                      (      sender               :TObject);
     procedure   P_Post_Processing_HeaderPaint                           (      sender               :TObject);
@@ -1805,7 +1811,7 @@ type
     public
       // Drawing surface pointer:
       srf_var_ptr                : PSurface;
-      {Spline edges  bounding Rectangles buffers------------------------------} {$region -fold}
+      {Spline edges  bounding rectangles buffers------------------------------} {$region -fold}
         // Indices inside spritesheet array:
         rct_eds_ind_arr          : TIntrArr;
         // TODO:
@@ -1815,7 +1821,7 @@ type
         // TODO:
         rct_eds_useless_fld_arr  : TColorArr;
       {$endregion}
-      {Spline points bounding Rectangles buffers------------------------------} {$region -fold}
+      {Spline points bounding rectangles buffers------------------------------} {$region -fold}
         // Indices inside spritesheet array:
         rct_pts_ind_arr          : TIntrArr;
         // TODO:
@@ -2778,6 +2784,10 @@ type
       srf_var_ptr: PSurface;
       // Indices inside spritesheet array:
       ppr_bmp_ind: integer;
+      // TODO:
+      ppr_arr    : TFXInfo2Arr;
+      // TODO:
+      global_prop: TFXInfo2;
       // Create class instance:
       constructor Create;                                            {$ifdef Linux}[local];{$endif}
       // Destroy class instance:
@@ -3310,8 +3320,9 @@ var
 
 {Misc. routines--} {$region -fold}
 procedure ImageBmpResize(var img:TImage; const w,h:integer); inline;
-procedure BmpResize(var bmp:Graphics.TBitmap; var bmp_ptr:PInteger; const w,h:integer); inline;
+procedure BmpResize (var bmp:Graphics.TBitmap; var bmp_ptr:PInteger; const w,h:integer); inline;
 procedure BtnRctDraw(var pnl:TPanel; const btn:TBitBtn; const color:integer); inline;
+procedure BtnConDraw(var pnl:TPanel; const pt0,pt1:TPtPos; const color,line_h_length0,line_h_length1:integer); inline;
 procedure SpeedButtonRepaint;
 procedure FormChangeSize;
 procedure BtnKeyPress(sp_btn,bkgnd_btn:TSpeedButton; btn_pnl1,btn_pnl2:TScrollBox; btn_pnl3:TPanel; down_btn_ptr:PByteBool; b:byte; cur1:integer; cur2:integer=crDefault);
@@ -3454,6 +3465,18 @@ begin
                 btn.top,
                 btn.left+btn.width,
                 btn.top +btn.height);
+    end;
+end; {$endregion}
+// Buttons connect:
+procedure BtnConDraw    (var pnl:TPanel; const pt0,pt1:TPtPos; const color,line_h_length0,line_h_length1:integer); inline; {$region -fold}
+begin
+  with pnl.Canvas do
+    begin
+      Pen.Color  :=color;
+      Brush.Style:=bsSolid;
+      Line(pt0.x-line_h_length0,pt0.y,pt0.x               ,pt0.y);
+      Line(pt1.x-line_h_length1,pt1.y,pt1.x               ,pt1.y);
+      Line(pt0.x-line_h_length0,pt0.y,pt1.x-line_h_length1,pt1.y);
     end;
 end; {$endregion}
 {$endregion}
@@ -23717,7 +23740,7 @@ procedure   TPProc.PProcInit;                                                   
 var
   i: integer;
 begin
-  SetLength(ppr_images_inds_arr   ,22);
+  SetLength(ppr_images_inds_arr   ,11{22});
   FillWord (ppr_images_inds_arr[0],Length(ppr_images_inds_arr),ppr_bmp_ind);
   SetLength(ppr_images_label_arr0 ,Length(ppr_images_inds_arr));
   SetLength(ppr_images_label_arr1 ,Length(ppr_images_inds_arr));
@@ -23728,21 +23751,21 @@ begin
   ppr_images_label_arr1[04]:=' Darken';
   ppr_images_label_arr1[05]:=' Grayscale';
   ppr_images_label_arr1[06]:=' Noise: Monochrome';
-  ppr_images_label_arr1[07]:=' Noise: Random';
+  ppr_images_label_arr1[07]:=' Noise: Grayscale';
   ppr_images_label_arr1[08]:=' Blur';
   ppr_images_label_arr1[09]:=' Contrast';
   ppr_images_label_arr1[10]:=' Gamma';
-  ppr_images_label_arr1[11]:=' Gradient: Alphablend';
+  {ppr_images_label_arr1[11]:=' Gradient: Alphablend';
   ppr_images_label_arr1[12]:=' Gradient: Additive';
   ppr_images_label_arr1[13]:=' Gradient: Inverse';
   ppr_images_label_arr1[14]:=' Gradient: Highlight';
   ppr_images_label_arr1[15]:=' Gradient: Darken';
   ppr_images_label_arr1[16]:=' Gradient: Grayscale';
-  ppr_images_label_arr1[17]:=' Gradient: Mono. Noise';
-  ppr_images_label_arr1[18]:=' Gradient: Rand. Noise';
+  ppr_images_label_arr1[17]:=' Gradient: Monochrome Noise';
+  ppr_images_label_arr1[18]:=' Gradient: Grayscale Noise';
   ppr_images_label_arr1[19]:=' Gradient: Blur';
   ppr_images_label_arr1[20]:=' Gradient: Contrast';
-  ppr_images_label_arr1[21]:=' Gradient: Gamma';
+  ppr_images_label_arr1[21]:=' Gradient: Gamma';}
   with TUIImgScrollBox(ui_obj_mgr.ui_obj_arr[1]) do
     begin
       SetLength(items_sel_inds_arr  ,Length(ppr_images_inds_arr));
@@ -23754,33 +23777,6 @@ begin
           begin
             item_fx_arr[i]:=fx_info2_default;
             fx_style0     :=i;
-          end;
-        TRGBA(item_fx_arr[00].fx_color0).a:=100;
-        TRGBA(item_fx_arr[01].fx_color0).a:=100;
-        TRGBA(item_fx_arr[03].fx_color0).a:=100;
-        TRGBA(item_fx_arr[04].fx_color0).a:=100;
-        TRGBA(item_fx_arr[06].fx_color0).a:=100;
-        with  item_fx_arr[07] do
-          begin
-                  fx_color0   :=000;
-                  fx_color1   :=000;
-            TRGBA(fx_color0).r:=255;
-            TRGBA(fx_color1).r:=001;
-            TRGBA(fx_color0).a:=255;
-            TRGBA(fx_color1).a:=000;
-                  fx_style1   :=000;
-          end;
-        TRGBA(item_fx_arr[09].fx_color0).a:=127;
-        TRGBA(item_fx_arr[10].fx_color0).a:=005;
-        with  item_fx_arr[18] do
-          begin
-                  fx_color0   :=000;
-                  fx_color1   :=000;
-            TRGBA(fx_color0).r:=255;
-            TRGBA(fx_color1).r:=001;
-            TRGBA(fx_color0).a:=255;
-            TRGBA(fx_color1).a:=000;
-                  fx_style1   :=000;
           end;
     end;
 end; {$endregion}
@@ -23886,12 +23882,9 @@ begin
 end; {$endregion}
 procedure   TPProc.AddPProcObj;                                                       {$ifdef Linux}[local];{$endif} {$region -fold}
 begin
-  with obj_var do
-    begin
-      has_blur:=True;
-      Inc(blur_layers_cnt);
-      cmr_var.mov_dir:=mdNone;
-    end;
+  SetLength(ppr_arr,Length(ppr_arr)+1);
+  ppr_arr[Length(ppr_arr)-1]:=ppr_var.global_prop;
+  cmr_var.mov_dir           :=mdNone;
 end; {$endregion}
 procedure   TPProc.PProcDraw  (const pproc_ind:TColor; rct_clp_ptr_:PPtRect); inline; {$ifdef Linux}[local];{$endif} {$region -fold}
 var
@@ -24119,6 +24112,25 @@ procedure TF_MainForm.P_Post_Processing_FX_Settings_SettingsMouseLeave(sender:TO
 begin
   P_Post_Processing_FX_Settings_Settings.Color:=Darken2(P_Post_Processing_FX_Settings_Settings.Color,16);
 end; {$endregion}
+procedure TF_MainForm.P_Post_Processing_FX_Settings_SettingsPaint     (sender:TObject);                                                          {$region -fold}
+begin
+  BtnConDraw(P_Post_Processing_FX_Settings_Settings,
+             PtPos(SB_Post_Processing_FX_Settings_Color0.Left+SB_Post_Processing_FX_Settings_Color0.Width >>1,
+                   SB_Post_Processing_FX_Settings_Color0.Top +SB_Post_Processing_FX_Settings_Color0.Height>>1),
+             PtPos(SB_Post_Processing_FX_Settings_Color1.Left+SB_Post_Processing_FX_Settings_Color1.Width >>1,
+                   SB_Post_Processing_FX_Settings_Color1.Top +SB_Post_Processing_FX_Settings_Color1.Height>>1),
+             $00382127,
+             00006+SB_Post_Processing_FX_Settings_Color0.Width>>1,
+             00006+SB_Post_Processing_FX_Settings_Color1.Width>>1);
+  BtnConDraw(P_Post_Processing_FX_Settings_Settings,
+             PtPos(SB_Post_Processing_FX_Settings_Alpha0.Left+SB_Post_Processing_FX_Settings_Alpha0.Width >>1,
+                   SB_Post_Processing_FX_Settings_Alpha0.Top +SB_Post_Processing_FX_Settings_Alpha0.Height>>1),
+             PtPos(SB_Post_Processing_FX_Settings_Alpha1.Left+SB_Post_Processing_FX_Settings_Alpha1.Width >>1,
+                   SB_Post_Processing_FX_Settings_Alpha1.Top +SB_Post_Processing_FX_Settings_Alpha1.Height>>1),
+             $00382127,
+             00006+SB_Post_Processing_FX_Settings_Alpha0.Width>>1,
+             00006+SB_Post_Processing_FX_Settings_Alpha1.Width>>1);
+end; {$endregion}
 procedure TF_MainForm.SB_Post_ProcessingClick                         (sender:TObject);                                                          {$region -fold}
 begin
   SB_Draw_Buttons_Button_Bkgnd.Left   :=SB_Post_Processing.Left;
@@ -24134,10 +24146,12 @@ end; {$endregion}
 procedure TF_MainForm.BB_Post_Processing_GenerateClick                (sender:TObject);                                                          {$region -fold}
 begin
   with ppr_var,srf_var_ptr^ do
-    begin
-      AddPProcObj;
-      EventGroupsCalc(calc_arr,[11,21,30,37,41,48]);
-    end;
+    with TUIImgScrollBox(ui_obj_mgr.ui_obj_arr[1]) do
+      if (first_sel_item_ind<>-1) then
+        begin
+          AddPProcObj;
+          EventGroupsCalc(calc_arr,[11,21,30,37,41,48]);
+        end;
 end; {$endregion}
 procedure TF_MainForm.P_Post_Processing_HeaderMouseEnter              (sender:TObject);                                                          {$region -fold}
 begin
@@ -24170,6 +24184,8 @@ begin
     end;
 end; {$endregion}
 procedure TF_MainForm.I_Post_Processing_ListMouseDown                 (sender:TObject; button:TMouseButton; shift:TShiftState; x,y:integer);     {$region -fold}
+var
+  i: integer;
 begin
   with TUIImgScrollBox(ui_obj_mgr.ui_obj_arr[1]) do
     begin
@@ -24178,6 +24194,59 @@ begin
         Exit;
       OnMouseDown(x,y);
       ppr_var.PostProcessingImagesListRepaint;
+      if (first_sel_item_ind=-1) then
+        with CB_Post_Processing_FX_Settings_Style do
+          begin
+            L_Post_Processing_Name.Caption:='';
+            ItemIndex                     :=-1;
+            Enabled                       :=False;
+          end
+      else
+        with CB_Post_Processing_FX_Settings_Style,item_fx_arr[first_sel_item_ind] do
+          begin
+            L_Post_Processing_Name.Caption:=ppr_images_label_arr1[first_sel_item_ind];
+              case fx_style0 of
+                05,16:
+                  begin
+                    Enabled    :=True;
+                      Items[0] :='Red';
+                      Items[1] :='Green';
+                      Items[2] :='Blue';
+                    for i:=3 to 9 do
+                      Items[i] :='';
+                      ItemIndex:=fx_style1;
+                  end;
+                07,18:
+                  begin
+                    Enabled    :=True;
+                    for i:=0 to 4 do
+                      Items[i] :='Grayscale'+IntToStr(i);
+                    for i:=5 to 9 do
+                      Items[i] :='';
+                      ItemIndex:=fx_style1;
+                  end;
+                08,19:
+                  begin
+                    Enabled  :=True;
+                    Items[0] :='RGB';
+                    Items[1] :='RRB';
+                    Items[2] :='RGR';
+                    Items[3] :='GGB';
+                    Items[4] :='RGG';
+                    Items[5] :='BGB';
+                    Items[6] :='RBB';
+                    Items[7] :='RRR';
+                    Items[8] :='GGG';
+                    Items[9] :='BBB';
+                    ItemIndex:=fx_style1;
+                  end;
+                otherwise
+                  begin
+                    ItemIndex:=-1;
+                    Enabled  :=False;
+                  end;
+              end;
+          end;
     end;
 end; {$endregion}
 procedure TF_MainForm.I_Post_Processing_ListMouseUp                   (sender:TObject; button:TMouseButton; shift:TShiftState; x,y:integer);     {$region -fold}
@@ -24211,6 +24280,105 @@ begin
   SB_Post_Processing_List_Zoom_Hint_Hide.Transparent:=False;
   SB_Post_Processing_List_Zoom_Hint_Hide.Visible    :=False;
   L_Post_Processing_List_Zoom_Hint      .Visible    :=False;
+end; {$endregion}
+procedure TF_MainForm.CB_Post_Processing_FX_Settings_StyleSelect      (sender:TObject);                                                          {$region -fold}
+begin
+  with TUIImgScrollBox(ui_obj_mgr.ui_obj_arr[1]) do
+    with CB_Post_Processing_FX_Settings_Style do
+      begin
+        case item_fx_arr[first_sel_item_ind].fx_style0 of
+          5: ItemIndex:=Min(ItemIndex,2);
+          7: ItemIndex:=Min(ItemIndex,4);
+          8: ItemIndex:=Min(ItemIndex,9);
+        end;
+        item_fx_arr[first_sel_item_ind].fx_style1:=ItemIndex;
+      end;
+  ppr_var.PostProcessingImagesListRepaint;
+end; {$endregion}
+procedure TF_MainForm.CB_Post_Processing_FX_Settings_StyleChange      (sender:TObject);                                                          {$region -fold}
+begin
+  with TUIImgScrollBox(ui_obj_mgr.ui_obj_arr[1]) do
+    with CB_Post_Processing_FX_Settings_Style do
+      begin
+        case item_fx_arr[first_sel_item_ind].fx_style0 of
+          5: ItemIndex:=Min(ItemIndex,2);
+          7: ItemIndex:=Min(ItemIndex,4);
+          8: ItemIndex:=Min(ItemIndex,9);
+        end;
+        item_fx_arr[first_sel_item_ind].fx_style1:=ItemIndex;
+      end;
+end; {$endregion}
+procedure TF_MainForm.SB_Post_Processing_FX_Settings_Color0Click      (sender:TObject);                                                          {$region -fold}
+var
+  i: integer;
+begin
+  CD_Select_Color.Color:=SB_Post_Processing_FX_Settings_Color0.Color;
+  if CD_Select_Color.Execute then
+    begin
+      SB_Post_Processing_FX_Settings_Color0.Color:=CD_Select_Color.Color;
+      SB_Post_Processing_FX_Settings_Color0.Down :=False;
+      with TUIImgScrollBox(ui_obj_mgr.ui_obj_arr[1]) do
+        begin
+          for i:=0 to Length(item_fx_arr)-1 do
+            with item_fx_arr[i] do
+              begin
+                      fx_color0   :=    SB_Post_Processing_FX_Settings_Color0.Color;
+                TRGBA(fx_color0).a:=Red(SB_Post_Processing_FX_Settings_Alpha0.Color);
+              end;
+        end;
+      ppr_var.PostProcessingImagesListRepaint;
+    end;
+end; {$endregion}
+procedure TF_MainForm.SB_Post_Processing_FX_Settings_Color1Click      (sender:TObject);                                                          {$region -fold}
+var
+  i: integer;
+begin
+  CD_Select_Color.Color:=SB_Post_Processing_FX_Settings_Color1.Color;
+  if CD_Select_Color.Execute then
+    begin
+      SB_Post_Processing_FX_Settings_Color1.Color:=CD_Select_Color.Color;
+      SB_Post_Processing_FX_Settings_Color1.Down :=False;
+      with TUIImgScrollBox(ui_obj_mgr.ui_obj_arr[1]) do
+        for i:=0 to Length(item_fx_arr)-1 do
+          with item_fx_arr[i] do
+            begin
+                    fx_color1   :=    SB_Post_Processing_FX_Settings_Color1.Color;
+              TRGBA(fx_color1).a:=Red(SB_Post_Processing_FX_Settings_Alpha1.Color);
+            end;
+      ppr_var.PostProcessingImagesListRepaint;
+    end;
+end; {$endregion}
+procedure TF_MainForm.SB_Post_Processing_FX_Settings_Alpha0Click      (sender:TObject);                                                          {$region -fold}
+var
+  i: integer;
+begin
+  CD_Select_Color.Color:=SB_Post_Processing_FX_Settings_Alpha0.Color;
+  if CD_Select_Color.Execute then
+    begin
+      SB_Post_Processing_FX_Settings_Alpha0.Color:=CD_Select_Color.Color;
+      SB_Post_Processing_FX_Settings_Alpha0.Down :=False;
+      with TUIImgScrollBox(ui_obj_mgr.ui_obj_arr[1]) do
+        for i:=0 to Length(item_fx_arr)-1 do
+          with item_fx_arr[i] do
+            TRGBA(fx_color0).a:=Red(SB_Post_Processing_FX_Settings_Alpha0.Color);
+      ppr_var.PostProcessingImagesListRepaint;
+    end;
+end; {$endregion}
+procedure TF_MainForm.SB_Post_Processing_FX_Settings_Alpha1Click      (sender:TObject);                                                          {$region -fold}
+var
+  i: integer;
+begin
+  CD_Select_Color.Color:=SB_Post_Processing_FX_Settings_Alpha1.Color;
+  if CD_Select_Color.Execute then
+    begin
+      SB_Post_Processing_FX_Settings_Alpha1.Color:=CD_Select_Color.Color;
+      SB_Post_Processing_FX_Settings_Alpha1.Down :=False;
+      with TUIImgScrollBox(ui_obj_mgr.ui_obj_arr[1]) do
+        for i:=0 to Length(item_fx_arr)-1 do
+          with item_fx_arr[i] do
+            TRGBA(fx_color1).a:=Red(SB_Post_Processing_FX_Settings_Alpha1.Color);
+      ppr_var.PostProcessingImagesListRepaint;
+    end;
 end; {$endregion}
 {$endregion}
 

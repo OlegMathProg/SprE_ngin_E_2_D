@@ -219,6 +219,7 @@ type
       // Selected items count:
       items_sel_cnt           : TColor;
       items_sel_cnt_max       : TColor;
+      first_sel_item_ind      : integer;
       // Index of first visibe item in scrollbox:
       first_vis_item_ind      : TColor;
       // Items row length:
@@ -638,6 +639,7 @@ begin
   low_rct_size_limit1     :=PtPos    (100,100);
   items_sel_cnt           :=00;
   items_sel_cnt_max       :=01;
+  first_sel_item_ind      :=-1;
   sel_grid_type           :=01;
   multithreading_block_cnt:=usable_threads_cnt;//}1;
   img_icon_fx_focused_pow :=35;
@@ -766,6 +768,7 @@ var
   row_cnt         : TColor=2;
   fx_color0_      : TColor;
   fx_color1_      : TColor;
+  fx_style0_      : byte=0;
   b0,b1           : boolean;
   set_shift_type  : byte=0;
 
@@ -799,7 +802,8 @@ var
         begin
           fx_color0_:=SetColorInv(fx_color0);
           fx_color1_:=SetColorInv(fx_color1);
-          if (fx_style0 in [11..21]) then
+          fx_style0_:=fx_style0+Byte(TRGBA(fx_color0).a<>TRGBA(fx_color1).a)*11;
+          if (fx_style0_ in [11..21]) then
             with ui_grad_prop do
               begin
                 set_grad_to_vis_area:=False{True};
@@ -815,7 +819,7 @@ var
                                                rct_ent.height,
                                                @ui_grad_prop,
                                                 ui_grad_prop);
-                if (fx_style0=17) then
+                if (fx_style0_=17) then
                   SetGradCol(fx_color0_,
                              fx_color1_,
                              ui_grad_prop)
@@ -828,66 +832,63 @@ var
                                res_var4,
                                rct2.width,
                                res_var2+1);
-                {if (i=12) then
-                  F_MainForm.M_Log.Lines.Text:='rct_ent.top: '   +IntToStr(rct_ent.top   )+#13+
-                                               'rct_ent.height: '+IntToStr(rct_ent.height)+#13+
-                                               'rct_src.top: '   +IntToStr(rct_src.top   )+#13+
-                                               'rct_src.height: '+IntToStr(rct_src.height)+#13+
-                                               'rct2.top: '      +IntToStr(rct2.top      )+#13+
-                                               'rct2.height: '   +IntToStr(rct2.height   );}
               end;
-            case fx_style0 of
-              00: PPAlphaBlend      (oc_bmp_ptr0,oc_w,rct2,fx_color0_ ,        TRGBA(fx_color0).a                             );
-              01: PPAdditiveDec     (oc_bmp_ptr0,oc_w,rct2,fx_color0_ ,        TRGBA(fx_color0).a                             );
-              02: PPInverseDec      (oc_bmp_ptr0,oc_w,rct2,            MAXBYTE-TRGBA(fx_color0).a                             );
-              03: PPHighlight       (oc_bmp_ptr0,oc_w,rct2,                    TRGBA(fx_color0).a                             );
-              04: PPDarken          (oc_bmp_ptr0,oc_w,rct2,                    TRGBA(fx_color0).a                             );
-              05:
+          case fx_style0_ of
+            00: PPAlphaBlend        (oc_bmp_ptr0,oc_w,rct2,fx_color0_ ,        TRGBA(fx_color0).a                             );
+            01: PPAdditiveDec       (oc_bmp_ptr0,oc_w,rct2,fx_color0_ ,MAXBYTE-TRGBA(fx_color0).a                             );
+            02: PPInverseDec        (oc_bmp_ptr0,oc_w,rct2,            MAXBYTE-TRGBA(fx_color0).a                             );
+            03: PPHighlight         (oc_bmp_ptr0,oc_w,rct2,                    TRGBA(fx_color0).a                             );
+            04: PPDarken            (oc_bmp_ptr0,oc_w,rct2,                    TRGBA(fx_color0).a                             );
+            05:
+              case fx_style1 of
+                0: PPGrayscaleRDec  (oc_bmp_ptr0,oc_w,rct2,                    TRGBA(fx_color0).a                             );
+                1: PPGrayscaleGDec  (oc_bmp_ptr0,oc_w,rct2,                    TRGBA(fx_color0).a                             );
+                2: PPGrayscaleBDec  (oc_bmp_ptr0,oc_w,rct2,                    TRGBA(fx_color0).a                             );
+              end;
+            06: PPMonoNoiseDec      (oc_bmp_ptr0,oc_w,rct2,fx_color0_ ,        TRGBA(fx_color0).a                             );
+            07:
+              case fx_style1 of
+                0: PPRandNoise      (oc_bmp_ptr0,oc_w,rct2,@RandNoise0,        TRGBA(fx_color0).r{255},TRGBA(fx_color1).r{001});
+                1: PPRandNoise      (oc_bmp_ptr0,oc_w,rct2,@RandNoise1,        TRGBA(fx_color0).r{001},TRGBA(fx_color1).r{001});
+                2: PPRandNoise      (oc_bmp_ptr0,oc_w,rct2,@RandNoise2,        TRGBA(fx_color0).r{001},TRGBA(fx_color1).r{001});
+                3: PPRandNoise      (oc_bmp_ptr0,oc_w,rct2,@RandNoise3,        TRGBA(fx_color0).r{127},TRGBA(fx_color1).r{000});
+                4: PPRandNoise      (oc_bmp_ptr0,oc_w,rct2,@RandNoise4,        TRGBA(fx_color0).r{000},TRGBA(fx_color1).r{002});
+              end;
+            08: PPBlurRGB9          (oc_bmp_ptr0,oc_w,rct2,TBlurType(fx_style1)                                               );
+            09: PPContrast1         (oc_bmp_ptr0,oc_w,rct2,                    TRGBA(fx_color0).a{127}                        );
+            10: PPGamma             (oc_bmp_ptr0,oc_w,rct2,                    TRGBA(fx_color0).r{005}{127}                   );
+            11: PPGrVAlphaBlend     (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,                oc_w);
+            12: PPGrVAdditive       (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,                oc_w);
+            13: PPGrVInverse        (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,                oc_w);
+            14: PPGrV16             (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,@HighlightDec1 ,oc_w);
+            15: PPGrV16             (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,@DarkenDec1    ,oc_w);
+            16:
+              case fx_style1 of
+                00: PPGrV17         (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,@GrayscaleRDec1,oc_w);
+                01: PPGrV17         (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,@GrayscaleGDec1,oc_w);
+                02: PPGrV17         (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,@GrayscaleBDec1,oc_w);
+              end;
+            17: PPGrVMonoNoise      (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,                oc_w);
+            18:
+              begin
+                with ui_grad_prop.grad_prop do
+                  begin
+                    TRGBA(grad_col0).r:=TRGBA(fx_color0_).b;
+                    TRGBA(grad_col1).r:=TRGBA(fx_color1_).b;
+                  end;
                 case fx_style1 of
-                  0: PPGrayscaleRDec(oc_bmp_ptr0,oc_w,rct2,                    TRGBA(fx_color0).a                             );
-                  1: PPGrayscaleGDec(oc_bmp_ptr0,oc_w,rct2,                    TRGBA(fx_color0).a                             );
-                  2: PPGrayscaleBDec(oc_bmp_ptr0,oc_w,rct2,                    TRGBA(fx_color0).a                             );
+                  0: PPGrVRandNoise (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,@RandNoise0Dec ,oc_w);
+                  1: PPGrVRandNoise (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,@RandNoise1Dec ,oc_w);
+                  2: PPGrVRandNoise (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,@RandNoise2Dec ,oc_w);
+                  3: PPGrVRandNoise (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,@RandNoise3Dec ,oc_w);
+                  4: PPGrVRandNoise (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,@RandNoise4Dec ,oc_w);
                 end;
-              06: PPMonoNoiseDec    (oc_bmp_ptr0,oc_w,rct2,fx_color0_ ,        TRGBA(fx_color0).a                             );
-              07:
-                case fx_style1 of
-                  0: PPRandNoise    (oc_bmp_ptr0,oc_w,rct2,@RandNoise0,        TRGBA(fx_color0).r{255},TRGBA(fx_color1).r{001});
-                  1: PPRandNoise    (oc_bmp_ptr0,oc_w,rct2,@RandNoise1,        TRGBA(fx_color0).r{001},TRGBA(fx_color1).r{001});
-                  2: PPRandNoise    (oc_bmp_ptr0,oc_w,rct2,@RandNoise2,        TRGBA(fx_color0).r{001},TRGBA(fx_color1).r{001});
-                  3: PPRandNoise    (oc_bmp_ptr0,oc_w,rct2,@RandNoise3,        TRGBA(fx_color0).r{127},TRGBA(fx_color1).r{000});
-                  4: PPRandNoise    (oc_bmp_ptr0,oc_w,rct2,@RandNoise4,        TRGBA(fx_color0).r{000},TRGBA(fx_color1).r{002});
-                end;
-              08: PPBlurRGB9        (oc_bmp_ptr0,oc_w,rct2,TBlurType(fx_style1)                                               );
-              09: PPContrast1       (oc_bmp_ptr0,oc_w,rct2,                    TRGBA(fx_color0).a{127}                        );
-              10: PPGamma           (oc_bmp_ptr0,oc_w,rct2,                    TRGBA(fx_color0).a{005}{127}                   );
-            end;
-          {if (grad_vec2.y>
-              grad_vec2.x) then}
-            case fx_style0 of
-              11: PPGrVAlphaBlend   (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,                oc_w);
-              12: PPGrVAdditive     (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,                oc_w);
-              13: PPGrVInverse      (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,                oc_w);
-              14: PPGrV16           (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,@HighlightDec1 ,oc_w);
-              15: PPGrV16           (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,@DarkenDec1    ,oc_w);
-              16:
-                case fx_style1 of
-                  00: PPGrV17       (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,@GrayscaleRDec1,oc_w);
-                  01: PPGrV17       (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,@GrayscaleRDec1,oc_w);
-                  02: PPGrV17       (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,@GrayscaleRDec1,oc_w);
-                end;
-              17: PPGrVMonoNoise    (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,                oc_w);
-              18:
-                case fx_style1 of
-                  0: PPGrVRandNoise (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,@RandNoise0Dec,TRGBA(fx_color0).r{255},TRGBA(fx_color1).r{001},oc_w);
-                  1: PPGrVRandNoise (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,@RandNoise1Dec,TRGBA(fx_color0).r{001},TRGBA(fx_color1).r{001},oc_w);
-                  2: PPGrVRandNoise (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,@RandNoise2Dec,TRGBA(fx_color0).r{001},TRGBA(fx_color1).r{001},oc_w);
-                  3: PPGrVRandNoise (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,@RandNoise3Dec,TRGBA(fx_color0).r{127},TRGBA(fx_color1).r{000},oc_w);
-                  4: PPGrVRandNoise (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,@RandNoise4Dec,TRGBA(fx_color0).r{000},TRGBA(fx_color1).r{002},oc_w);
-                end;
-              19: ;//PPGrV19        (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,@GrayscaleRDec1,oc_w);
-              20: PPGrVContrast     (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,                oc_w);
-              21: PPGrVGamma        (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,fx_gamma_pow,   oc_w);
-            end;
+
+              end;
+            19: ;//PPGrV19          (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,@GrayscaleRDec1,oc_w);
+            20: PPGrVContrast       (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,                oc_w);
+            21: PPGrVGamma          (oc_bmp_ptr0,oc_w,rct6,ui_grad_prop.grad_prop,                oc_w);
+          end;
         end;
   end; {$endregion}
 
@@ -1467,7 +1468,7 @@ end; {$endregion}
 procedure   TUIImgScrollBox.GetItemSelectedInd  (      x,y        :integer);                                                inline; {$region -fold}
 var
   item_focused_ind_max: TColor;
-  //s: string='';
+  i                   : integer;
 label
   l0;
 begin
@@ -1514,11 +1515,10 @@ begin
             else
             if   (items_sel_cnt<>0) then
               Dec(items_sel_cnt);
-            //s:='brunch0:'+IntToStr(Random(1000));
           end
         else
           begin
-            if (is_selected_arr[item_focused_ind>>1]) then
+            if  is_selected_arr[item_focused_ind>>1] then
               begin
                 is_selected_arr[item_focused_ind>>1]:=False;
                 if   (items_sel_cnt<>0) then
@@ -1527,11 +1527,12 @@ begin
             else
               begin
                 FillByte(is_selected_arr[0],Length(is_selected_arr),0);
-                items_sel_cnt:=0;
+                items_sel_cnt     :=00;
+                first_sel_item_ind:=-1;
                 goto l0;
               end;
           end;
-        //F_MainForm.M_Log.Lines.Text:=s+#13+'items_sel_cnt'+IntToStr(items_sel_cnt);
+        first_sel_item_ind:=NotIndexByte(@is_selected_arr[0],Length(is_selected_arr));
       end;
 end; {$endregion}
 procedure   TUIImgScrollBox.SetItemsUnfocused;                                                                              inline; {$region -fold}
@@ -1559,7 +1560,8 @@ begin
     if (item_focused_ind=MAX_TYPE_VAL[sel_grid_type]) then
       begin
         FillByte(is_selected_arr[0],Length(is_selected_arr),0);
-        items_sel_cnt:=0;
+        items_sel_cnt     :=00;
+        first_sel_item_ind:=-1;
       end;
 end; {$endregion}
 procedure   TUIImgScrollBox.SetPosShiftSize     (var   pvt        :TPoint; var dir:TMovingDirection; const b:boolean=True);         {$region -fold}
