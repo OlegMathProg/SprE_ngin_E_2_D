@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="12"/>
+    <BuildModes Count="1" Active="Release">
+      <Item1 Name="Debug">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="SprE_ngin_E_2_D"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir)"/>
+            <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <IncludeAssertionCode Value="True"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <Checks>
+              <IOChecks Value="True"/>
+              <RangeChecks Value="True"/>
+              <OverflowChecks Value="True"/>
+              <StackChecks Value="True"/>
+            </Checks>
+            <VerifyObjMethodCallValidity Value="True"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <TrashVariables Value="True"/>
+              <UseValgrind Value="True"/>
+              <StripSymbols Value="True"/>
+              <UseExternalDbgSyms Value="True"/>
+            </Debugging>
+            <Options>
+              <Win32>
+                <GraphicApplication Value="True"/>
+              </Win32>
+            </Options>
+          </Linking>
+        </CompilerOptions>
+      </Item1>
+    </BuildModes>
+    <ManyBuildModesSelection Value="Release"/>
+    <Units Count="30">
+      <Unit0>
+        <Filename Value="SprE_ngin_E_2_D.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos Y="25"/>
+        <UsageCount Value="200"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="Fast_Main.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="F_MainForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
+        <UsageCount Value="200"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="Hot_Keys.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="F_Hot_Keys"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="8"/>
+        <UsageCount Value="201"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="Image_Editor.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="F_Image_Editor"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="9"/>
+        <UsageCount Value="200"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="Fast_Scene_Tree.pas"/>
+        <EditorIndex Value="4"/>
+        <UsageCount Value="104"/>
+        <Loaded Value="True"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="Fast_AnimK.pas"/>
+        <EditorIndex Value="1"/>
+        <UsageCount Value="100"/>
+        <Loaded Value="True"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="Performance_Time.pas"/>
+        <EditorIndex Value="11"/>
+        <UsageCount Value="100"/>
+        <Loaded Value="True"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="Documentation.pas"/>
+        <EditorIndex Value="10"/>
+        <UsageCount Value="100"/>
+        <Loaded Value="True"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="Fast_Graphics.pas"/>
+        <EditorIndex Value="3"/>
+        <UsageCount Value="100"/>
+        <Loaded Value="True"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="Fast_SIMD.pas"/>
+        <EditorIndex Value="5"/>
+        <UsageCount Value="100"/>
+        <Loaded Value="True"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="Fast_GL.pas"/>
+        <EditorIndex Value="2"/>
+        <UsageCount Value="100"/>
+        <Loaded Value="True"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="Fast_Threads.pas"/>
+        <EditorIndex Value="6"/>
+        <UsageCount Value="101"/>
+        <Loaded Value="True"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="Fast_UI.pas"/>
+        <EditorIndex Value="7"/>
+        <UsageCount Value="100"/>
+        <Loaded Value="True"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="C:\lazarus\lcl\graphics.pp"/>
+        <UnitName Value="Graphics"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="226"/>
+        <CursorPos X="11" Y="262"/>
+        <UsageCount Value="4"/>
+      </Unit13>
+      <Unit14>
+        <Filename Value="C:\lazarus\lcl\forms.pp"/>
+        <UnitName Value="Forms"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1162"/>
+        <CursorPos X="14" Y="1185"/>
+        <UsageCount Value="3"/>
+      </Unit14>
+      <Unit15>
+        <Filename Value="C:\lazarus\lcl\controls.pp"/>
+        <UnitName Value="Controls"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1696"/>
+        <CursorPos X="14" Y="1715"/>
+        <UsageCount Value="3"/>
+      </Unit15>
+      <Unit16>
+        <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\win\wininc\defines.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="64"/>
+        <CursorPos X="13" Y="84"/>
+        <UsageCount Value="4"/>
+      </Unit16>
+      <Unit17>
+        <Filename Value="C:\Users\tania\AppData\Local\lazarus\onlinepackagemanager\packages\multithreadprocs\mtprocs.pas"/>
+        <UnitName Value="MTProcs"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="173"/>
+        <CursorPos X="15" Y="187"/>
+        <UsageCount Value="13"/>
+      </Unit17>
+      <Unit18>
+        <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\inc\systemh.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1025"/>
+        <CursorPos X="10" Y="1124"/>
+        <UsageCount Value="3"/>
+      </Unit18>
+      <Unit19>
+        <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\win\wininc\redef.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="355"/>
+        <CursorPos X="10" Y="374"/>
+        <UsageCount Value="3"/>
+      </Unit19>
+      <Unit20>
+        <Filename Value="C:\lazarus\lcl\dialogs.pp"/>
+        <UnitName Value="Dialogs"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="123"/>
+        <CursorPos X="5" Y="144"/>
+        <UsageCount Value="3"/>
+      </Unit20>
+      <Unit21>
+        <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\win\wininc\func.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="144"/>
+        <CursorPos X="11" Y="164"/>
+        <UsageCount Value="3"/>
+      </Unit21>
+      <Unit22>
+        <Filename Value="C:\lazarus\fpc\3.2.2\source\packages\fcl-base\src\custapp.pp"/>
+        <UnitName Value="CustApp"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="25"/>
+        <CursorPos X="14" Y="46"/>
+        <UsageCount Value="3"/>
+      </Unit22>
+      <Unit23>
+        <Filename Value="C:\Users\tania\AppData\Local\lazarus\onlinepackagemanager\packages\richmemo\richmemo.pas"/>
+        <UnitName Value="RichMemo"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="217"/>
+        <CursorPos X="15" Y="236"/>
+        <UsageCount Value="9"/>
+      </Unit23>
+      <Unit24>
+        <Filename Value="C:\lazarus\lcl\stdctrls.pp"/>
+        <UnitName Value="StdCtrls"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="455"/>
+        <CursorPos X="14" Y="474"/>
+        <UsageCount Value="9"/>
+      </Unit24>
+      <Unit25>
+        <Filename Value="C:\lazarus\lcl\buttons.pp"/>
+        <UnitName Value="Buttons"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="408"/>
+        <CursorPos X="14" Y="428"/>
+        <UsageCount Value="3"/>
+      </Unit25>
+      <Unit26>
+        <Filename Value="C:\lazarus\lcl\comctrls.pp"/>
+        <UnitName Value="ComCtrls"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="3695"/>
+        <CursorPos X="14" Y="3716"/>
+        <UsageCount Value="7"/>
+      </Unit26>
+      <Unit27>
+        <Filename Value="C:\lazarus\lcl\include\font.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="904"/>
+        <CursorPos Y="924"/>
+        <UsageCount Value="8"/>
+      </Unit27>
+      <Unit28>
+        <Filename Value="C:\lazarus\fpc\3.2.2\source\rtl\i386\mmx.pp"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="9"/>
+      </Unit28>
+      <Unit29>
+        <Filename Value="C:\lazarus\lcl\interfaces\win32\win32listsl.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="133"/>
+        <CursorPos Y="153"/>
+        <UsageCount Value="9"/>
+      </Unit29>
+    </Units>
+    <JumpHistory Count="30" HistoryIndex="29">
+      <Position1>
+        <Filename Value="Fast_Main.pas"/>
+        <Caret Line="25375" Column="38" TopLine="24384"/>
+      </Position1>
+      <Position2>
+        <Filename Value="Fast_Threads.pas"/>
+        <Caret Line="256" Column="11" TopLine="239"/>
+      </Position2>
+      <Position3>
+        <Filename Value="Fast_Threads.pas"/>
+        <Caret Line="677" Column="150" TopLine="658"/>
+      </Position3>
+      <Position4>
+        <Filename Value="Fast_Graphics.pas"/>
+        <Caret Line="94944" Column="238" TopLine="93386"/>
+      </Position4>
+      <Position5>
+        <Filename Value="Fast_Graphics.pas"/>
+        <Caret Line="95117" Column="36" TopLine="94651"/>
+      </Position5>
+      <Position6>
+        <Filename Value="Fast_Graphics.pas"/>
+        <Caret Line="15558" Column="18" TopLine="15361"/>
+      </Position6>
+      <Position7>
+        <Filename Value="Fast_Threads.pas"/>
+        <Caret Line="652" Column="25" TopLine="333"/>
+      </Position7>
+      <Position8>
+        <Filename Value="Fast_Graphics.pas"/>
+        <Caret Line="12863" Column="29" TopLine="12743"/>
+      </Position8>
+      <Position9>
+        <Filename Value="Fast_Graphics.pas"/>
+        <Caret Line="12906" Column="12" TopLine="12735"/>
+      </Position9>
+      <Position10>
+        <Filename Value="Fast_Graphics.pas"/>
+        <Caret Line="12804" Column="15" TopLine="12653"/>
+      </Position10>
+      <Position11>
+        <Filename Value="Fast_Graphics.pas"/>
+        <Caret Line="9002" Column="2" TopLine="8988"/>
+      </Position11>
+      <Position12>
+        <Filename Value="Fast_Graphics.pas"/>
+        <Caret Line="13503" Column="105" TopLine="13067"/>
+      </Position12>
+      <Position13>
+        <Filename Value="Fast_Scene_Tree.pas"/>
+        <Caret Line="1627" Column="207" TopLine="1607"/>
+      </Position13>
+      <Position14>
+        <Filename Value="Fast_Scene_Tree.pas"/>
+        <Caret Line="1828" Column="46" TopLine="1674"/>
+      </Position14>
+      <Position15>
+        <Filename Value="Fast_Scene_Tree.pas"/>
+        <Caret Line="1912" Column="66" TopLine="1675"/>
+      </Position15>
+      <Position16>
+        <Filename Value="Fast_Scene_Tree.pas"/>
+        <Caret Line="1407" Column="200" TopLine="1145"/>
+      </Position16>
+      <Position17>
+        <Filename Value="Fast_Scene_Tree.pas"/>
+        <Caret Line="2341" Column="59" TopLine="1583"/>
+      </Position17>
+      <Position18>
+        <Filename Value="Fast_SIMD.pas"/>
+        <Caret Line="1408" Column="220" TopLine="827"/>
+      </Position18>
+      <Position19>
+        <Filename Value="Fast_SIMD.pas"/>
+        <Caret Line="289" Column="55" TopLine="259"/>
+      </Position19>
+      <Position20>
+        <Filename Value="Fast_Graphics.pas"/>
+        <Caret Line="94610" Column="33" TopLine="94369"/>
+      </Position20>
+      <Position21>
+        <Filename Value="Fast_Threads.pas"/>
+        <Caret Line="694" Column="20" TopLine="667"/>
+      </Position21>
+      <Position22>
+        <Filename Value="Fast_Threads.pas"/>
+        <Caret Line="686" Column="29" TopLine="471"/>
+      </Position22>
+      <Position23>
+        <Filename Value="Fast_Main.pas"/>
+        <Caret Line="24258" Column="41" TopLine="24247"/>
+      </Position23>
+      <Position24>
+        <Filename Value="Fast_Graphics.pas"/>
+        <Caret Line="71631" Column="6" TopLine="71610"/>
+      </Position24>
+      <Position25>
+        <Filename Value="Fast_Main.pas"/>
+        <Caret Line="24254" Column="48" TopLine="24245"/>
+      </Position25>
+      <Position26>
+        <Filename Value="Fast_Threads.pas"/>
+        <Caret Line="128" Column="11" TopLine="108"/>
+      </Position26>
+      <Position27>
+        <Filename Value="Fast_Threads.pas"/>
+        <Caret Line="709" Column="19" TopLine="584"/>
+      </Position27>
+      <Position28>
+        <Filename Value="Fast_Graphics.pas"/>
+        <Caret Line="11902" Column="11" TopLine="11860"/>
+      </Position28>
+      <Position29>
+        <Filename Value="Fast_Graphics.pas"/>
+        <Caret Line="95071" Column="3" TopLine="94956"/>
+      </Position29>
+      <Position30>
+        <Filename Value="Fast_Graphics.pas"/>
+        <Caret Line="15322" Column="69" TopLine="96506"/>
+      </Position30>
+    </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes ActiveMode="default"/>
+    </RunParams>
+    <HistoryLists Count="1">
+      <List0 Name="LaunchingApplication" Type="File" Count="1">
+        <Item1 Value="C:\Windows\system32\cmd.exe /C ${TargetCmdLine}"/>
+      </List0>
+    </HistoryLists>
+  </ProjectSession>
+  <Debugging>
+    <BreakPoints>
+      <Item>
+        <Kind Value="bpkData"/>
+        <WatchScope Value="wpsGlobal"/>
+        <WatchKind Value="wpkWrite"/>
+        <InitialEnabled Value="False"/>
+      </Item>
+    </BreakPoints>
+    <Watches>
+      <Item>
+        <Expression Value="  PRGBA(pixel_ptr)^.r:=lin_to_srgb_arr[srgb_to_lin_arr1[TRGBA(src_pix).r][PRGBA(pixel_ptr)^.r][alpha]];
+"/>
+      </Item>
+    </Watches>
+  </Debugging>
+</CONFIG>
