@@ -13,6 +13,7 @@ Supported OS: currently only Windows.
 Rendering type: software (OpenGL is used only for outputting the final frame, but shader support is already implemented).
 
 Main modules:
+00. Fast_Main       : main editor routines
 01. Fast_AnimK      : animation (particles,physics,hair,fluid effects etc.)
 02. Fast_GL         : initializing GLSL shaders
 03. Fast_Graphics   : rendering of primitives (like a line, rectangle,circle), filters, blitters, CSR-sprites processing etc.
@@ -39,7 +40,7 @@ Tools page:
 
 - <img width="32" height="32" alt="Background" src="https://github.com/user-attachments/assets/b31c16ea-4c0d-4dec-95e6-00a9e1b04932" /> Background: background fill;
 
-- <img width="32" height="32" alt="Post-Process" src="https://github.com/user-attachments/assets/01f43e9a-64ea-48ed-84c4-5db9dd605ae3" /> Post-Process: various layer effects like AlphaBlend, Darken, Blur, Noise, etc. (almost completely implemented only in the source code);
+- <img width="32" height="32" alt="Post-Process" src="https://github.com/user-attachments/assets/01f43e9a-64ea-48ed-84c4-5db9dd605ae3" /> Post-Process: various layer effects like AlphaBlend, Darken, Blur, Noise, etc. (almost completely implemented);
 
 - <img width="32" height="32" alt="TileMap" src="https://github.com/user-attachments/assets/4c2b1140-0f6f-4298-8d0e-39ede84f25d0" /> TileMap: drawing sprites using a black-and-white mask (partially implemented, some work on the collision system);
 
@@ -49,7 +50,7 @@ Tools page:
 
 - <img width="32" height="32" alt="Play" src="https://github.com/user-attachments/assets/e5a1ad40-eef4-457e-b156-83647b5549f0" /> Play: starts the game loop;
 
-- <img width="32" height="32" alt="Game Settings" src="https://github.com/user-attachments/assets/3e4c9080-b052-49ba-877a-4cafde6f069c" /> Game Settings: some basic scene settings such as canvas size, display of some objects (partially implemented);
+- <img width="32" height="32" alt="Game Settings" src="https://github.com/user-attachments/assets/3e4c9080-b052-49ba-877a-4cafde6f069c" /> Game Settings: some basic scene settings such as "Borderless window", etc. (partially implemented);
 
 - <img width="32" height="32" alt="Add Actor" src="https://github.com/user-attachments/assets/e58e631e-8a5a-40fe-9f50-f4dc2028f5cd" /> Add Actor: adding characters (not implemented);
 
