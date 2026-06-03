@@ -62,6 +62,9 @@ All units are in active development and will be supplemented as needed.
 Executable demo(SprE_ngin_E_2_D.exe) is included, so run-n-fun.
 
 Screenshots:
+   0. Editor mode:
+<img width="1562" height="897" alt="image" src="https://github.com/user-attachments/assets/e95dde27-bf69-4e59-92d1-4ca70e0ff4cb" />
+
    1. Game mode: multithreading, SIMD, 100000 sprites
 <img width="1562" height="897" alt="Editor_Preview1" src="https://github.com/user-attachments/assets/d4cdf93e-4d7e-4095-aa16-1e7f102ac1d9" />
 
