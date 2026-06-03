@@ -65,21 +65,21 @@ Screenshots:
    0. Editor mode:
 <img width="1562" height="897" alt="image" src="https://github.com/user-attachments/assets/e95dde27-bf69-4e59-92d1-4ca70e0ff4cb" />
 
-   1. Game mode: multithreading, SIMD, 100000 sprites
+   1. Game mode(old UI design): multithreading, SIMD, 100000 sprites
 <img width="1562" height="897" alt="Editor_Preview1" src="https://github.com/user-attachments/assets/d4cdf93e-4d7e-4095-aa16-1e7f102ac1d9" />
 
-   2. Editor mode: spline with 20000000 points
+   2. Editor mode(old UI design): spline with 20000000 points
 <img width="1562" height="897" alt="Editor_Preview2" src="https://github.com/user-attachments/assets/46b76d05-e08e-4719-84a4-a9fa3d3e67fd" />
 
-   3. Editor mode: selected points in spline with 20000000 points
+   3. Editor mode(old UI design): selected points in spline with 20000000 points
 <img width="1562" height="897" alt="Editor_Preview3" src="https://github.com/user-attachments/assets/3dd94c26-e9dc-466d-a77a-78131d64a93c" />
 
-   4. Editor mode: selected points in splines with 60000000 points
+   4. Editor mode(old UI design): selected points in splines with 60000000 points
 <img width="1562" height="897" alt="Editor_Preview4" src="https://github.com/user-attachments/assets/b45ded14-7d49-4cf0-bd02-c7578b519ab8" />
 
-   5. Editor mode: drawing tilemap, text, etc.
+   5. Editor mode(old UI design): drawing tilemap, text, etc.
 <img width="1652" height="896" alt="Editor_Preview5" src="https://github.com/user-attachments/assets/b144ef3b-daf9-4e1d-a312-fe668e68d255" />
 
-   6. Turbo Pascal style UI:
+   6. Turbo Pascal style UI(old UI design):
 <img width="1562" height="897" alt="Editor_Preview6" src="https://github.com/user-attachments/assets/2a948d5b-b574-4c22-9cd4-f3e25971d29a" />
 
