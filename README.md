@@ -64,6 +64,7 @@ All units are in active development and will be supplemented as needed.
 Executable demo(SprE_ngin_E_2_D.exe) is included, so run-n-fun.
 
 Screenshots:
+
    0. Editor mode:
 <img width="1562" height="897" alt="image" src="https://github.com/user-attachments/assets/e95dde27-bf69-4e59-92d1-4ca70e0ff4cb" />
 
