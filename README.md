@@ -13,6 +13,7 @@ Supported OS: currently only Windows.
 Rendering type: software (OpenGL is used only for outputting the final frame, but shader support is already implemented).
 
 Main modules:
+
 00. Fast_Main       : main editor routines
 01. Fast_AnimK      : animation (particles,physics,hair,fluid effects etc.)
 02. Fast_GL         : initializing GLSL shaders
