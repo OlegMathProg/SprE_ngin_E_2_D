@@ -13,6 +13,8 @@ Supported OS: currently only Windows.
 Rendering type: software (OpenGL is used only for outputting the final frame, but shader support is already implemented).
 
 Main modules:
+
+00. Fast_Main       : main editor routines
 01. Fast_AnimK      : animation (particles,physics,hair,fluid effects etc.)
 02. Fast_GL         : initializing GLSL shaders
 03. Fast_Graphics   : rendering of primitives (like a line, rectangle,circle), filters, blitters, CSR-sprites processing etc.
@@ -39,7 +41,7 @@ Tools page:
 
 - <img width="32" height="32" alt="Background" src="https://github.com/user-attachments/assets/b31c16ea-4c0d-4dec-95e6-00a9e1b04932" /> Background: background fill;
 
-- <img width="32" height="32" alt="Post-Process" src="https://github.com/user-attachments/assets/01f43e9a-64ea-48ed-84c4-5db9dd605ae3" /> Post-Process: various layer effects like AlphaBlend, Darken, Blur, Noise, etc. (almost completely implemented only in the source code);
+- <img width="32" height="32" alt="Post-Process" src="https://github.com/user-attachments/assets/01f43e9a-64ea-48ed-84c4-5db9dd605ae3" /> Post-Process: various layer effects like AlphaBlend, Darken, Blur, Noise, etc. (almost completely implemented);
 
 - <img width="32" height="32" alt="TileMap" src="https://github.com/user-attachments/assets/4c2b1140-0f6f-4298-8d0e-39ede84f25d0" /> TileMap: drawing sprites using a black-and-white mask (partially implemented, some work on the collision system);
 
@@ -49,7 +51,7 @@ Tools page:
 
 - <img width="32" height="32" alt="Play" src="https://github.com/user-attachments/assets/e5a1ad40-eef4-457e-b156-83647b5549f0" /> Play: starts the game loop;
 
-- <img width="32" height="32" alt="Game Settings" src="https://github.com/user-attachments/assets/3e4c9080-b052-49ba-877a-4cafde6f069c" /> Game Settings: some basic scene settings such as canvas size, display of some objects (partially implemented);
+- <img width="32" height="32" alt="Game Settings" src="https://github.com/user-attachments/assets/3e4c9080-b052-49ba-877a-4cafde6f069c" /> Game Settings: some basic scene settings such as "Borderless window", etc. (partially implemented);
 
 - <img width="32" height="32" alt="Add Actor" src="https://github.com/user-attachments/assets/e58e631e-8a5a-40fe-9f50-f4dc2028f5cd" /> Add Actor: adding characters (not implemented);
 
@@ -62,21 +64,25 @@ All units are in active development and will be supplemented as needed.
 Executable demo(SprE_ngin_E_2_D.exe) is included, so run-n-fun.
 
 Screenshots:
-   1. Game mode: multithreading, SIMD, 100000 sprites
+
+   0. Editor mode:
+<img width="1562" height="897" alt="image" src="https://github.com/user-attachments/assets/d1dcf5ca-38ba-4c0e-9444-98b4b3193eac" />
+
+   2. Game mode(old UI design): multithreading, SIMD, 100000 sprites
 <img width="1562" height="897" alt="Editor_Preview1" src="https://github.com/user-attachments/assets/d4cdf93e-4d7e-4095-aa16-1e7f102ac1d9" />
 
-   2. Editor mode: spline with 20000000 points
+   3. Editor mode(old UI design): spline with 20000000 points
 <img width="1562" height="897" alt="Editor_Preview2" src="https://github.com/user-attachments/assets/46b76d05-e08e-4719-84a4-a9fa3d3e67fd" />
 
-   3. Editor mode: selected points in spline with 20000000 points
+   4. Editor mode(old UI design): selected points in spline with 20000000 points
 <img width="1562" height="897" alt="Editor_Preview3" src="https://github.com/user-attachments/assets/3dd94c26-e9dc-466d-a77a-78131d64a93c" />
 
-   4. Editor mode: selected points in splines with 60000000 points
+   5. Editor mode(old UI design): selected points in splines with 60000000 points
 <img width="1562" height="897" alt="Editor_Preview4" src="https://github.com/user-attachments/assets/b45ded14-7d49-4cf0-bd02-c7578b519ab8" />
 
-   5. Editor mode: drawing tilemap, text, etc.
+   6. Editor mode(old UI design): drawing tilemap, text, etc.
 <img width="1652" height="896" alt="Editor_Preview5" src="https://github.com/user-attachments/assets/b144ef3b-daf9-4e1d-a312-fe668e68d255" />
 
-   6. Turbo Pascal style UI:
+   7. Turbo Pascal style UI(old UI design):
 <img width="1562" height="897" alt="Editor_Preview6" src="https://github.com/user-attachments/assets/2a948d5b-b574-4c22-9cd4-f3e25971d29a" />
 
