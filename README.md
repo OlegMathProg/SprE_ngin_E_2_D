@@ -66,7 +66,7 @@ Executable demo(SprE_ngin_E_2_D.exe) is included, so run-n-fun.
 Screenshots:
 
    0. Editor mode:
-<img width="1562" height="897" alt="image" src="https://github.com/user-attachments/assets/d1dcf5ca-38ba-4c0e-9444-98b4b3193eac" />
+<img width="1562" height="897" alt="image" src="https://github.com/user-attachments/assets/31115c4a-cbf9-414f-97bc-904ba1971bbd" />
 
    1. Scene tree and object tags:
 <img width="1562" height="897" alt="image" src="https://github.com/user-attachments/assets/fd388e15-e13e-4941-ba13-9044131792e7" />
